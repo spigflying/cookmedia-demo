@@ -159,20 +159,33 @@ section { padding: clamp(4rem, 10vh, 7rem) clamp(1.2rem, 5vw, 3rem); }
 }
 .hero__actions { display: flex; gap: 0.9rem; flex-wrap: wrap; }
 
-/* ===== 數據 ===== */
-.stats .panel { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
-.stat { border-left: 1px solid var(--line); padding-left: 1.4rem; }
-.stat:first-child { border-left: none; padding-left: 0; }
-.stat__num {
-  font-family: var(--mono); font-weight: 700; line-height: 1;
-  font-size: clamp(2rem, 4.5vw, 3rem); letter-spacing: -0.03em;
-  display: flex; align-items: baseline; gap: 0.1rem;
+/* ===== 數據(規格表 / 儀表板風)===== */
+.stats .panel { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.6rem; }
+.stat { padding-top: 1rem; border-top: 2px solid var(--ink); }
+/* 頂部編號列 */
+.stat__head {
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: var(--mono); margin-bottom: 1.7rem;
 }
-.stat__num i { font-style: normal; font-size: 1rem; color: var(--muted); }
+.stat__no { font-size: 0.82rem; letter-spacing: 0.12em; font-weight: 700; color: var(--ink); }
+.stat__ico { color: var(--faint); font-size: 1rem; transition: transform 0.3s var(--ease), color 0.3s; }
+.stat:hover .stat__ico { color: var(--ink); transform: translate(3px, -3px); }
+/* 大數字 */
+.stat__num {
+  font-family: var(--mono); font-weight: 700; line-height: 0.95;
+  font-size: clamp(2.6rem, 6vw, 4.2rem); letter-spacing: -0.04em;
+  display: flex; align-items: baseline; gap: 0.05rem;
+}
+.stat__num i { font-style: normal; font-size: 1.15rem; color: var(--muted); margin-left: 0.1rem; }
+/* 中文說明(放大、清楚) */
 .stat__label {
-  font-family: var(--mono); color: var(--muted);
-  font-size: 0.74rem; letter-spacing: 0.1em; text-transform: uppercase;
-  margin-top: 0.9rem;
+  font-family: var(--sans); color: var(--ink); font-size: 0.98rem;
+  font-weight: 500; margin-top: 0.9rem; letter-spacing: 0.02em;
+}
+/* 英文代號(等寬小字) */
+.stat__en {
+  font-family: var(--mono); color: var(--faint); font-size: 0.7rem;
+  letter-spacing: 0.16em; text-transform: uppercase; margin-top: 0.35rem;
 }
 
 /* ===== 服務:左 sticky 清單 + 右捲動切換 ===== */
@@ -293,8 +306,7 @@ a.contact__item:hover { opacity: 0.7; }
   .nav__links a:not(.nav__cta) { display: none; }
   .hero__mosaic { grid-template-columns: repeat(4, 1fr); }
   .hero__bottom { align-items: flex-start; flex-direction: column; }
-  .stats .panel { grid-template-columns: repeat(2, 1fr); gap: 2rem 1.4rem; }
-  .stat:nth-child(3) { border-left: none; padding-left: 0; }
+  .stats .panel { grid-template-columns: repeat(2, 1fr); gap: 2.4rem 1.4rem; }
   .features__wrap { grid-template-columns: 1fr; gap: 2rem; }
   .features__side { position: static; }
   .features__list { flex-direction: row; flex-wrap: wrap; gap: 0.8rem 1.6rem; }
@@ -306,7 +318,6 @@ a.contact__item:hover { opacity: 0.7; }
 }
 @media (max-width: 520px) {
   .stats .panel { grid-template-columns: 1fr; }
-  .stat { border-left: none; padding-left: 0; }
   .how__grid { grid-template-columns: 1fr; }
   .contact__info { gap: 1.4rem; }
 }

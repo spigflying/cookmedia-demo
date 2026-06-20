@@ -114,9 +114,9 @@ mm.add(
       const obj = { v: 0 };
       gsap.to(obj, {
         v: target,
-        duration: 1.4 * d,
-        ease: "power2.out",
-        delay: i * 0.08,
+        duration: 2.4 * d,           // 放慢數字滾動,更有質感
+        ease: "power3.out",          // 尾段更緩,數字優雅停下
+        delay: i * 0.15,             // 四格依序錯開,節奏更明顯
         scrollTrigger: { trigger: stat, start: "top 88%" },
         onUpdate: () => (numEl.textContent = Math.round(obj.v)),
       });
