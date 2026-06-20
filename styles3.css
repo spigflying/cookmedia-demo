@@ -167,7 +167,8 @@ section { padding: clamp(4rem, 10vh, 7rem) clamp(1.2rem, 5vw, 3rem); }
   display: flex; justify-content: space-between; align-items: center;
   font-family: var(--mono); margin-bottom: 1.7rem;
 }
-.stat__no { font-size: 0.82rem; letter-spacing: 0.12em; font-weight: 700; color: var(--ink); }
+.stat__tag { font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase;
+  font-weight: 700; color: var(--muted); }
 .stat__ico { color: var(--faint); font-size: 1rem; transition: transform 0.3s var(--ease), color 0.3s; }
 .stat:hover .stat__ico { color: var(--ink); transform: translate(3px, -3px); }
 /* 大數字 */
@@ -179,13 +180,8 @@ section { padding: clamp(4rem, 10vh, 7rem) clamp(1.2rem, 5vw, 3rem); }
 .stat__num i { font-style: normal; font-size: 1.15rem; color: var(--muted); margin-left: 0.1rem; }
 /* 中文說明(放大、清楚) */
 .stat__label {
-  font-family: var(--sans); color: var(--ink); font-size: 0.98rem;
+  font-family: var(--sans); color: var(--ink); font-size: 1rem;
   font-weight: 500; margin-top: 0.9rem; letter-spacing: 0.02em;
-}
-/* 英文代號(等寬小字) */
-.stat__en {
-  font-family: var(--mono); color: var(--faint); font-size: 0.7rem;
-  letter-spacing: 0.16em; text-transform: uppercase; margin-top: 0.35rem;
 }
 
 /* ===== 服務:左 sticky 清單 + 右捲動切換 ===== */
