@@ -12,9 +12,10 @@
   --grad: linear-gradient(135deg, #cfe0ff 0%, #f2d9f0 50%, #cdeede 100%);
   --grad-2: linear-gradient(135deg, #e7ddff 0%, #ffe0ef 55%, #d8f3e8 100%);
   --maxw: 1180px;
-  --mono: "Space Mono", ui-monospace, "SFMono-Regular", monospace;
+  --mono: "JetBrains Mono", "Noto Sans TC", ui-monospace, monospace;          /* 內文 / UI 等寬(中文 fallback Noto) */
+  --display: "Martian Mono", "JetBrains Mono", "Noto Sans TC", monospace;     /* 大標 / 大數字(中文 fallback Noto) */
   /* Latin 走等寬,中文自動 fallback 到 Noto Sans TC */
-  --sans: "Space Mono", "Noto Sans TC", system-ui, sans-serif;
+  --sans: "JetBrains Mono", "Noto Sans TC", system-ui, sans-serif;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -47,7 +48,7 @@ a { color: inherit; text-decoration: none; }
   z-index: 999; display: grid; place-items: center;
 }
 .loader__mark {
-  font-family: var(--mono); font-weight: 700; font-size: 1.6rem;
+  font-family: var(--display); font-weight: 700; font-size: 1.6rem;
   letter-spacing: 0.05em; color: var(--ink);
   display: flex; align-items: center;
 }
@@ -149,8 +150,8 @@ section { padding: clamp(4rem, 10vh, 7rem) clamp(1.2rem, 5vw, 3rem); }
 .hero__back:hover { color: var(--ink); }
 .hero__title {
   margin: auto 0; /* 在 back-link 與底部列之間垂直置中 */
-  font-family: var(--mono); font-weight: 700; text-transform: uppercase;
-  font-size: clamp(3rem, 11vw, 9rem); line-height: 0.96; letter-spacing: -0.03em;
+  font-family: var(--display); font-weight: 700; text-transform: uppercase;
+  font-size: clamp(2.6rem, 9.5vw, 7.5rem); line-height: 0.98; letter-spacing: -0.04em;
 }
 .hero__bottom { display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem; flex-wrap: wrap; }
 .hero__sub {
@@ -173,8 +174,8 @@ section { padding: clamp(4rem, 10vh, 7rem) clamp(1.2rem, 5vw, 3rem); }
 .stat:hover .stat__ico { color: var(--ink); transform: translate(3px, -3px); }
 /* 大數字 */
 .stat__num {
-  font-family: var(--mono); font-weight: 700; line-height: 0.95;
-  font-size: clamp(2.6rem, 6vw, 4.2rem); letter-spacing: -0.04em;
+  font-family: var(--display); font-weight: 700; line-height: 0.95;
+  font-size: clamp(2.2rem, 5vw, 3.6rem); letter-spacing: -0.04em;
   display: flex; align-items: baseline; gap: 0.05rem;
 }
 .stat__num i { font-style: normal; font-size: 1.15rem; color: var(--muted); margin-left: 0.1rem; }
@@ -187,8 +188,8 @@ section { padding: clamp(4rem, 10vh, 7rem) clamp(1.2rem, 5vw, 3rem); }
 /* ===== 服務:左 sticky 清單 + 右捲動切換 ===== */
 .features__head { margin-bottom: 3rem; }
 .features__head h2 {
-  font-family: var(--mono); font-weight: 700; text-transform: uppercase;
-  font-size: clamp(1.6rem, 3.5vw, 2.4rem); letter-spacing: -0.01em; line-height: 1.1;
+  font-family: var(--display); font-weight: 700; text-transform: uppercase;
+  font-size: clamp(1.5rem, 3.2vw, 2.2rem); letter-spacing: -0.01em; line-height: 1.1;
   margin-top: 0.8rem;
 }
 .features__wrap { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: clamp(2rem, 5vw, 5rem); align-items: start; }
@@ -231,8 +232,8 @@ section { padding: clamp(4rem, 10vh, 7rem) clamp(1.2rem, 5vw, 3rem); }
 /* ===== 大字宣言面板 ===== */
 .statement .panel { text-align: left; }
 .statement h2 {
-  font-family: var(--mono); font-weight: 700; text-transform: uppercase;
-  font-size: clamp(1.7rem, 4.5vw, 3.2rem); line-height: 1.12; letter-spacing: -0.02em;
+  font-family: var(--display); font-weight: 700; text-transform: uppercase;
+  font-size: clamp(1.6rem, 4vw, 2.8rem); line-height: 1.18; letter-spacing: -0.02em;
 }
 .statement h2 .prompt { color: var(--muted); }
 .statement__cn { color: var(--muted); margin-top: 1.6rem; max-width: 620px; font-size: 1.02rem; }
@@ -240,8 +241,8 @@ section { padding: clamp(4rem, 10vh, 7rem) clamp(1.2rem, 5vw, 3rem); }
 /* ===== HOW IT WORKS(純白整段)===== */
 .how { background: #ffffff; padding-top: clamp(5rem, 11vh, 8rem); padding-bottom: clamp(5rem, 11vh, 8rem); }
 .how__head h2 {
-  font-family: var(--mono); font-weight: 700; text-transform: uppercase;
-  font-size: clamp(1.9rem, 5vw, 3rem); letter-spacing: -0.01em; line-height: 1.05;
+  font-family: var(--display); font-weight: 700; text-transform: uppercase;
+  font-size: clamp(1.7rem, 4.5vw, 2.7rem); letter-spacing: -0.01em; line-height: 1.05;
 }
 .how__lead { font-family: var(--mono); color: var(--muted); font-size: 0.88rem;
   letter-spacing: 0.02em; margin-top: 1rem; }
@@ -263,8 +264,8 @@ section { padding: clamp(4rem, 10vh, 7rem) clamp(1.2rem, 5vw, 3rem); }
 /* ===== 聯絡 ===== */
 .contact .panel { text-align: center; background: var(--ink); color: #fff; border: none; }
 .contact h2 {
-  font-family: var(--mono); font-weight: 700; text-transform: uppercase;
-  font-size: clamp(1.8rem, 5vw, 3.2rem); line-height: 1.12; letter-spacing: -0.02em;
+  font-family: var(--display); font-weight: 700; text-transform: uppercase;
+  font-size: clamp(1.6rem, 4.5vw, 2.8rem); line-height: 1.18; letter-spacing: -0.02em;
 }
 .contact h2 .prompt { color: #777; }
 .contact h2 em { font-style: normal; background: var(--grad-2);
@@ -284,8 +285,8 @@ a.contact__item:hover { opacity: 0.7; }
 .footer { padding: clamp(3rem, 6vw, 5rem) clamp(1.2rem, 5vw, 3rem) 2.5rem; }
 .footer__wrap { max-width: var(--maxw); margin: 0 auto; }
 .footer__brand {
-  font-family: var(--mono); font-weight: 700; letter-spacing: -0.03em;
-  font-size: clamp(3rem, 12vw, 8rem); line-height: 1; margin-bottom: 2.5rem;
+  font-family: var(--display); font-weight: 700; letter-spacing: -0.03em;
+  font-size: clamp(2.6rem, 10vw, 7rem); line-height: 1; margin-bottom: 2.5rem;
 }
 .footer__cols { display: flex; gap: 4rem; flex-wrap: wrap; justify-content: space-between;
   border-top: 1px solid var(--line); padding-top: 2rem; }
