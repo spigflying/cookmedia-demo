@@ -14,11 +14,9 @@ function buildMosaic() {
   for (let i = 0; i < N; i++) {
     const c = document.createElement("div");
     c.className = "cell";
-    const violet = Math.random() < 0.5;        // 一半偏紫、一半偏白
-    const a = Math.random() * 0.18;            // 低透明度,維持隱約感
-    c.style.background = violet
-      ? `rgba(120,108,210,${a.toFixed(3)})`
-      : `rgba(255,255,255,${(a * 1.4).toFixed(3)})`;
+    // 統一薰衣草紫同色系,低 alpha 形成靜態深淺底紋
+    const a = (0.03 + Math.random() * 0.12).toFixed(3);
+    c.style.background = `rgba(124,108,214,${a})`;
     frag.appendChild(c);
     cells.push(c);
   }
@@ -73,16 +71,25 @@ mm.add(
         ease: "power1.out",
         stagger: { each: 0.015, from: "random" },
       });
-      // 浮現後持續微微閃動(減少動態時 d=0,跳過)
+      // 只挑約四成方塊,在同色系「淺紫 ↔ 深紫」間緩慢來回變色,
+      // 營造低調、不規律的閃爍感(其餘維持靜態;減少動態時整段跳過)
       if (!reduceMotion) {
-        gsap.to(mosaicCells, {
-          opacity: () => 0.4 + Math.random() * 0.6,
-          duration: () => 2 + Math.random() * 3,
-          repeat: -1,
-          yoyo: true,
-          ease: "sine.inOut",
-          delay: 0.6,
-          stagger: { each: 0.05, from: "random" },
+        const lightC = "rgba(150,138,228,0.05)";
+        const deepC = "rgba(96,80,198,0.34)";
+        mosaicCells.forEach((c) => {
+          if (Math.random() > 0.4) return;
+          gsap.fromTo(
+            c,
+            { backgroundColor: lightC },
+            {
+              backgroundColor: deepC,
+              duration: 4 + Math.random() * 5, // 4~9 秒,緩慢
+              delay: Math.random() * 4,
+              repeat: -1,
+              yoyo: true,
+              ease: "sine.inOut",
+            }
+          );
         });
       }
     }
