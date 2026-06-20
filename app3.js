@@ -39,6 +39,11 @@ mm.add(
     const { reduceMotion } = ctx.conditions;
     const d = reduceMotion ? 0 : 1; // 動畫時間倍率:減少動態時歸零
 
+    // 在 loader 還蓋著時就先把 hero 元素與馬賽克設為隱藏,
+    // 避免 loader 淡出瞬間先閃出完整內容、再被動畫設成透明的「閃一下」。
+    gsap.set(".hero [data-reveal]", { autoAlpha: 0, y: 32 });
+    gsap.set(mosaicCells, { autoAlpha: 0 });
+
     /* ---------- 1. 載入動畫 ---------- */
     const loader = document.getElementById("loader");
     gsap
@@ -53,16 +58,17 @@ mm.add(
 
     /* ---------- 2. Hero 進場 + 馬賽克閃動 ---------- */
     function heroIn() {
-      gsap.from(".hero [data-reveal]", {
-        y: 32,
-        autoAlpha: 0,
+      // 從已隱藏狀態淡入(初始狀態已在前面用 gsap.set 設好)
+      gsap.to(".hero [data-reveal]", {
+        y: 0,
+        autoAlpha: 1,
         duration: 0.9 * d,
         ease: "power3.out",
         stagger: 0.12,
       });
       // 馬賽克方塊隨機錯位浮現
-      gsap.from(mosaicCells, {
-        autoAlpha: 0,
+      gsap.to(mosaicCells, {
+        autoAlpha: 1,
         duration: 0.6 * d,
         ease: "power1.out",
         stagger: { each: 0.015, from: "random" },
