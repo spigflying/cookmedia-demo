@@ -412,7 +412,7 @@ a.contact__item:hover { opacity: 0.7; }
 
 /* 卡3:多元媒體 4 格輪亮 */
 .adfx-media { display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr);
-  gap: 16px; padding: 38px clamp(40px, 18%, 110px); }
+  gap: 14px; padding: 26px clamp(44px, 18%, 112px) 58px; }
 .adfx-media .tile { border-radius: 14px; display: grid; place-items: center;
   animation: tilePulse 3.2s ease-in-out infinite; }
 .adfx-media .tile svg { width: 30px; height: 30px; fill: none; stroke: rgba(255, 255, 255, 0.95);
@@ -443,7 +443,8 @@ a.contact__item:hover { opacity: 0.7; }
 }
 .adfx-chart .trend { position: absolute; left: clamp(36px, 12%, 80px); right: clamp(36px, 12%, 80px);
   top: 46px; bottom: 56px; width: auto; height: auto; overflow: visible; }
-.adfx-chart .trend polyline { fill: none; stroke: rgba(255, 255, 255, 0.98); stroke-width: 2.5;
+.adfx-chart .trend polyline { fill: none; stroke: rgba(255, 255, 255, 0.98); stroke-width: 2;
+  vector-effect: non-scaling-stroke;   /* 線寬固定 2px,不被 viewBox 非等比拉粗 */
   stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 170; stroke-dashoffset: 0;
   animation: drawLine 2.8s ease-in-out infinite; }
 @keyframes drawLine { 0% { stroke-dashoffset: 170; } 55%, 100% { stroke-dashoffset: 0; } }
