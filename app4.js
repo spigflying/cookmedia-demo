@@ -158,7 +158,7 @@ mm.add(
               liveTimer = setInterval(() => {
                 v += 1;
                 numEl.textContent = fmt(v);
-              }, 90);   // 速度快兩倍(原 180ms → 90ms)
+              }, 45);   // 再快兩倍(90ms → 45ms)
             }
           },
         },

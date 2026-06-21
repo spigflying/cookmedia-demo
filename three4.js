@@ -57,19 +57,19 @@ async function init(mount) {
   });
   geo.center();
 
-  // ---- 毛玻璃材質(PBR 物理材質):透光 + 高粗糙度做霧面,玻璃內透出朱橘紅 ----
+  // ---- 透明毛玻璃材質(PBR 物理材質):全透光 + 適度霧面,只剩極淡朱橘紅 ----
   const mat = new THREE.MeshPhysicalMaterial({
     color: 0xffffff,
     metalness: 0,
-    roughness: 0.6,                 // 高粗糙度 → 霧面毛玻璃
-    transmission: 0.96,             // 透光玻璃
-    thickness: 1.4,                 // 厚度影響折射與內部染色
-    ior: 1.5,
-    attenuationColor: 0xeb5f43,     // 透過玻璃時染上朱橘紅
-    attenuationDistance: 0.7,
-    clearcoat: 0.4,                 // 表面一層清漆,給霧面一點光澤
-    clearcoatRoughness: 0.5,
-    envMapIntensity: 1.1,
+    roughness: 0.4,                 // 霧面但保留透明感
+    transmission: 1.0,              // 全透光,玻璃感更強
+    thickness: 0.5,                 // 薄 → 內部染色很淡
+    ior: 1.45,
+    attenuationColor: 0xeb5f43,     // 僅淡淡一抹朱橘紅
+    attenuationDistance: 3.0,       // 距離大 → 染色極淡,接近透明
+    clearcoat: 0.5,                 // 表面清漆,霧面仍有光澤
+    clearcoatRoughness: 0.35,
+    envMapIntensity: 1.0,
     transparent: true,
   });
   const mesh = new THREE.Mesh(geo, mat);
