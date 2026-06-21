@@ -448,17 +448,16 @@ a.contact__item:hover { opacity: 0.7; }
   70% { box-shadow: 0 0 8px 1px rgba(255, 255, 255, 0.6), 0 0 0 13px rgba(255, 255, 255, 0); }
   100% { box-shadow: 0 0 8px 1px rgba(255, 255, 255, 0.6), 0 0 0 0 rgba(255, 255, 255, 0); }
 }
-/* 掃描微光,左→右緩慢掠過,帶來即時感 */
+/* 掃描微光:用 background-position 移動(不位移方塊本身),手機也不會造成水平溢出 */
 .adfx-perf .perf-sweep {
-  position: absolute; top: 0; bottom: 0; left: 0; width: 34%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+  position: absolute; inset: 0;
+  background: linear-gradient(100deg, transparent 38%, rgba(255, 255, 255, 0.13) 50%, transparent 62%);
+  background-size: 260% 100%; background-repeat: no-repeat;
   animation: perfSweep 4.6s ease-in-out infinite;
 }
 @keyframes perfSweep {
-  0% { transform: translateX(-110%); opacity: 0; }
-  20% { opacity: 1; }
-  80% { opacity: 1; }
-  100% { transform: translateX(330%); opacity: 0; }
+  0% { background-position: 150% 0; }
+  100% { background-position: -60% 0; }
 }
 
 /* ===== RWD ===== */

@@ -57,18 +57,23 @@ async function init(mount) {
   });
   geo.center();
 
-  // ---- 背景圖案:朱橘紅色系「夥伴集合」圓球聚落,擺在玻璃後面 ----
-  // 透過毛玻璃折射出流動色塊,讓玻璃效果更明顯(也呼應「合作品牌客戶」)
-  // 兩個交叉色環,當作有設計感的雕塑,透過毛玻璃折射出流動色弧
+  // ---- 背景:發光的「日光燈管」圓環,擺在玻璃後面 ----
+  // 亮橘色自發光圓環 + 外圈柔光暈,透過毛玻璃散射成柔和的發光圓圈
   const backdrop = new THREE.Group();
-  const ringMat1 = new THREE.MeshStandardMaterial({ color: 0xeb5f43, roughness: 0.38, metalness: 0.1 });
-  const ringMat2 = new THREE.MeshStandardMaterial({ color: 0xf5853a, roughness: 0.38, metalness: 0.1 });
-  const ring1 = new THREE.Mesh(new THREE.TorusGeometry(0.52, 0.15, 28, 80), ringMat1);
-  const ring2 = new THREE.Mesh(new THREE.TorusGeometry(0.46, 0.12, 28, 80), ringMat2);
-  ring2.rotation.x = Math.PI / 2;   // 與 ring1 交叉
-  backdrop.add(ring1, ring2);
-  backdrop.rotation.set(0.5, 0.35, 0);
-  backdrop.position.z = -0.85;      // 在玻璃(z≈0)後面,才會被玻璃折射
+  const tubeMat = new THREE.MeshStandardMaterial({
+    color: 0xffb78f, emissive: 0xff7a3a, emissiveIntensity: 2.4, roughness: 0.5, metalness: 0,
+  });
+  const tube = new THREE.Mesh(new THREE.TorusGeometry(0.5, 0.085, 32, 160), tubeMat);
+  // 外圈柔光暈:較粗、半透明、疊加混色,模擬燈管的光暈
+  const halo = new THREE.Mesh(
+    new THREE.TorusGeometry(0.5, 0.22, 24, 120),
+    new THREE.MeshBasicMaterial({
+      color: 0xff8a4a, transparent: true, opacity: 0.16,
+      blending: THREE.AdditiveBlending, depthWrite: false,
+    })
+  );
+  backdrop.add(tube, halo);
+  backdrop.position.z = -0.85;      // 在玻璃(z≈0)後面,才會被玻璃散射
   scene.add(backdrop);
 
   // ---- 透明毛玻璃材質(PBR 物理材質):全透光 + 適度霧面,只剩極淡朱橘紅 ----
@@ -114,9 +119,10 @@ async function init(mount) {
   const clock = new THREE.Clock();
   renderer.setAnimationLoop(() => {
     const dt = clock.getDelta();
+    const t = clock.getElapsedTime();
     mesh.rotation.y += dt * 0.6;        // 玻璃「88+」約 5.7 秒一圈,優雅不暈
-    backdrop.rotation.y += dt * 0.25;   // 背景色環反向緩轉,折射色弧隨之流動
-    backdrop.rotation.x += dt * 0.1;
+    backdrop.rotation.z += dt * 0.12;   // 燈管圓環緩慢自轉
+    tubeMat.emissiveIntensity = 2.2 + Math.sin(t * 1.8) * 0.5;   // 呼吸發光,像燈管微微閃動
     renderer.render(scene, camera);
   });
 }
