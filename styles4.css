@@ -1,20 +1,20 @@
-/* ===== 設計變數(等寬科技 / 白紅黑「硃紅·活力」風)===== */
+/* ===== 設計變數(等寬科技 / 白紅黑「酒紅·質感」風)===== */
 :root {
-  --bg: #faf7f2;        /* 主背景:暖紙白(不是死白) */
-  --bg-2: #f4eee8;      /* 略深暖白 */
+  --bg: #f4f2ee;        /* 主背景:冷調米白(沉穩,不死白) */
+  --bg-2: #ece9e3;      /* 略深米白 */
   --panel: #ffffff;     /* 區塊面板:純白卡 */
-  --ink: #1a1614;       /* 主文字:近黑墨(帶極微紅褐,不是純黑) */
-  --muted: #7c6f6a;     /* 次要文字:暖灰褐 */
-  --faint: #c8bbb5;     /* 未啟用清單項:淺暖灰 */
-  --line: rgba(26, 22, 20, 0.12);
-  --line-soft: rgba(26, 22, 20, 0.07);
-  /* 紅的相近色家族:主色 + 提亮 + 壓暗 */
-  --red: #e8412a;       /* 硃紅,主重點色 */
-  --red-deep: #7a1b12;  /* 栗紅,壓暗/陰影 */
-  --coral: #ff6b4a;     /* 珊瑚,提亮/hover */
-  /* 漸層改走紅家族,控制飽和避免過重 */
-  --grad: linear-gradient(135deg, #ffd9cc 0%, #ff8c6e 50%, #e8412a 100%);
-  --grad-2: linear-gradient(135deg, #ff6b4a 0%, #e8412a 55%, #7a1b12 100%);
+  --ink: #14110f;       /* 主文字:暖近黑 */
+  --muted: #6c645f;     /* 次要文字:沉灰褐 */
+  --faint: #bdb4ad;     /* 未啟用清單項:淺灰 */
+  --line: rgba(20, 17, 15, 0.12);
+  --line-soft: rgba(20, 17, 15, 0.07);
+  /* 酒紅的相近色家族:主色 + 提亮 + 壓暗 */
+  --red: #8e1b23;       /* 酒紅 oxblood,主重點色(深而不豔) */
+  --red-deep: #6b1420;  /* 勃根地,壓暗/陰影 */
+  --rose: #c0595e;      /* 灰玫瑰,提亮/hover */
+  /* 漸層走酒紅家族,低彩度、內斂 */
+  --grad: linear-gradient(135deg, #d99aa0 0%, #b04550 50%, #8e1b23 100%);
+  --grad-2: linear-gradient(135deg, #c0595e 0%, #8e1b23 55%, #5a0f18 100%);
   --maxw: 1180px;
   --mono: "JetBrains Mono", "Noto Sans TC", ui-monospace, monospace;          /* 內文 / UI 等寬(中文 fallback Noto) */
   --display: "Martian Mono", "JetBrains Mono", "Noto Sans TC", monospace;     /* 大標 / 大數字(中文 fallback Noto) */
@@ -67,7 +67,7 @@ a { color: inherit; text-decoration: none; }
   border-bottom: 1px solid transparent;
 }
 .nav.scrolled {
-  background: rgba(250, 247, 242, 0.82);
+  background: rgba(244, 242, 238, 0.85);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--line);
 }
@@ -83,7 +83,7 @@ a { color: inherit; text-decoration: none; }
   color: #fff !important; background: var(--red);
   padding: 0.6rem 1.1rem; border-radius: 8px;
 }
-.nav__cta:hover { background: var(--coral); }
+.nav__cta:hover { background: var(--rose); }
 
 /* ===== 通用 ===== */
 section { padding: clamp(4rem, 10vh, 7rem) clamp(1.2rem, 5vw, 3rem); }
@@ -127,7 +127,7 @@ section { padding: clamp(4rem, 10vh, 7rem) clamp(1.2rem, 5vw, 3rem); }
 /* ===== HERO(純文字大標 + 馬賽克網格背景)===== */
 .hero {
   position: relative; min-height: 100vh; overflow: hidden; padding: 0;
-  background: linear-gradient(120deg, #fffdfa 0%, #f7ede7 55%, #f4e3dc 100%);
+  background: linear-gradient(120deg, #faf9f6 0%, #efece8 55%, #ece2e2 100%);
 }
 /* 動態馬賽克方塊:由 JS 生成 cell,GSAP 微微閃動 */
 .hero__mosaic {
@@ -219,7 +219,7 @@ section { padding: clamp(4rem, 10vh, 7rem) clamp(1.2rem, 5vw, 3rem); }
 .feature__mock {
   border-radius: 20px; height: 300px; margin: 1.4rem 0 1.8rem;
   background: var(--grad); border: 1px solid rgba(255,255,255,0.6);
-  box-shadow: 0 24px 60px rgba(122, 27, 18, 0.16);
+  box-shadow: 0 24px 60px rgba(90, 15, 24, 0.18);
   position: relative; overflow: hidden;
 }
 .feature__mock span {
@@ -228,8 +228,8 @@ section { padding: clamp(4rem, 10vh, 7rem) clamp(1.2rem, 5vw, 3rem); }
   text-transform: uppercase; color: rgba(255,255,255,0.85);
 }
 .feature:nth-child(2) .feature__mock { background: var(--grad-2); }
-.feature:nth-child(3) .feature__mock { background: linear-gradient(135deg, #ff6b4a, #7a1b12); }
-.feature:nth-child(4) .feature__mock { background: linear-gradient(135deg, #ff8c6e, #e8412a); }
+.feature:nth-child(3) .feature__mock { background: linear-gradient(135deg, #a83d47, #4d0d15); }
+.feature:nth-child(4) .feature__mock { background: linear-gradient(135deg, #c0595e, #8e1b23); }
 .feature h3 { font-family: var(--sans); font-weight: 700; font-size: 1.5rem; margin-bottom: 0.7rem; }
 .feature p { font-family: var(--mono); color: var(--muted); font-size: 0.85rem; line-height: 1.8; max-width: 460px; }
 
