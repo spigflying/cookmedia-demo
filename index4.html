@@ -99,7 +99,6 @@
             <div class="feature__no">01 / 網路廣告投放</div>
             <div class="feature__mock">
               <div class="adfx adfx-phone" aria-hidden="true">
-                <div class="creative glass"><b>AD</b></div>
                 <div class="ph glass">
                   <div class="ph-notch"></div>
                   <div class="ad-slot s1"></div>
@@ -154,31 +153,20 @@
           <article class="feature" data-feature data-cn="以轉換與 ROAS 為核心,持續放大投資報酬。">
             <div class="feature__no">04 / 數位績效行銷</div>
             <div class="feature__mock">
-              <div class="adfx adfx-chart" aria-hidden="true">
-                <!-- 柱狀圖模式 -->
-                <div class="chart-bars">
-                  <div class="bars">
-                    <div class="bar c1 glass"></div>
-                    <div class="bar c2 glass"></div>
-                    <div class="bar c3 glass"></div>
-                    <div class="bar c4 glass"></div>
-                    <div class="bar c5 glass"></div>
-                  </div>
-                  <svg class="trend" viewBox="0 0 100 60" preserveAspectRatio="none">
-                    <polyline points="4,50 28,41 52,30 76,17 96,6"/>
-                  </svg>
-                </div>
-                <!-- 圓餅圖模式(過場切換) -->
-                <div class="chart-pie">
-                  <svg viewBox="0 0 42 42">
-                    <g transform="rotate(-90 21 21)">
-                      <circle class="seg sg1" cx="21" cy="21" r="15.915" pathLength="100"/>
-                      <circle class="seg sg2" cx="21" cy="21" r="15.915" pathLength="100"/>
-                      <circle class="seg sg3" cx="21" cy="21" r="15.915" pathLength="100"/>
-                      <circle class="seg sg4" cx="21" cy="21" r="15.915" pathLength="100"/>
-                    </g>
-                  </svg>
-                </div>
+              <div class="adfx adfx-perf" aria-hidden="true">
+                <div class="perf-grid"><i></i><i></i><i></i></div>
+                <svg class="perf-svg" viewBox="0 0 100 56" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="perfFill" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0" stop-color="rgba(255,255,255,0.34)"/>
+                      <stop offset="1" stop-color="rgba(255,255,255,0)"/>
+                    </linearGradient>
+                  </defs>
+                  <path class="perf-area" d="M2,47 C16,45 24,38 38,35 C52,32 58,22 72,17 C82,13 90,9 98,6 L98,56 L2,56 Z" fill="url(#perfFill)"/>
+                  <path class="perf-line" d="M2,47 C16,45 24,38 38,35 C52,32 58,22 72,17 C82,13 90,9 98,6" fill="none"/>
+                </svg>
+                <span class="perf-dot"></span>
+                <div class="perf-sweep"></div>
               </div>
               <span>A/B Test · ROAS · Conversion · Insight</span>
             </div>

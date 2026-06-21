@@ -352,18 +352,6 @@ a.contact__item:hover { opacity: 0.7; }
   width: 128px; height: 226px; border-radius: 26px; padding: 24px 13px 15px;
   display: flex; flex-direction: column; gap: 10px; position: relative;
 }
-/* 飄入的廣告素材小卡(左側),填補空白、呼應「投放版位」 */
-.adfx-phone .creative {
-  position: absolute; top: 28%; left: 20%; width: 80px; height: 52px;
-  border-radius: 12px; display: grid; place-items: center;
-  color: rgba(255, 255, 255, 0.9); font-family: var(--mono); font-size: 0.6rem;
-  font-weight: 700; letter-spacing: 0.12em;
-  animation: creativeFloat 3.6s ease-in-out infinite;
-}
-@keyframes creativeFloat {
-  0%, 100% { transform: translate(0, 0); opacity: 0.5; }
-  50% { transform: translate(12px, -9px); opacity: 0.95; }
-}
 .adfx-phone .ph-notch {
   position: absolute; top: 9px; left: 50%; transform: translateX(-50%);
   width: 34px; height: 5px; border-radius: 3px; background: rgba(255, 255, 255, 0.5);
@@ -431,47 +419,46 @@ a.contact__item:hover { opacity: 0.7; }
   36% { transform: translateY(0) scale(1); }
 }
 
-/* 卡4:柱狀圖 ⇄ 圓餅圖 過場切換循環 */
-.adfx-chart .chart-bars, .adfx-chart .chart-pie {
-  position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: center;
+/* 卡4:績效成長面積圖(平滑上升曲線 + 漸層填色 + 發光資料點 + 掃描微光) */
+.adfx-perf { overflow: hidden; }
+.adfx-perf .perf-svg {
+  position: absolute; left: clamp(30px, 10%, 72px); right: clamp(18px, 6%, 38px);
+  top: 38px; bottom: 46px; overflow: visible;
 }
-.adfx-chart .chart-bars { padding: 46px clamp(36px, 12%, 80px) 56px; animation: barMode 8s ease-in-out infinite; }
-.adfx-chart .chart-pie { align-items: center; justify-content: center; padding-bottom: 14px;
-  animation: pieMode 8s ease-in-out infinite; }
-.adfx-chart .bars { display: flex; align-items: flex-end; gap: 12px; width: 100%; height: 100%; }
-.adfx-chart .bar { flex: 1; border-radius: 8px 8px 4px 4px; transform-origin: bottom;
-  animation: barGrow 2.8s ease-in-out infinite; }
-.adfx-chart .c1 { height: 40%; animation-delay: 0s; }
-.adfx-chart .c2 { height: 56%; animation-delay: 0.12s; }
-.adfx-chart .c3 { height: 50%; animation-delay: 0.24s; }
-.adfx-chart .c4 { height: 74%; animation-delay: 0.36s; }
-.adfx-chart .c5 { height: 90%; animation-delay: 0.48s; }
-@keyframes barGrow {
-  0% { transform: scaleY(0.22); opacity: 0.5; }
-  55% { transform: scaleY(1); opacity: 1; }
-  100% { transform: scaleY(0.22); opacity: 0.5; }
+.adfx-perf .perf-line {
+  stroke: rgba(255, 255, 255, 0.96); stroke-width: 2.5;
+  vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round;
 }
-.adfx-chart .trend { position: absolute; left: clamp(36px, 12%, 80px); right: clamp(36px, 12%, 80px);
-  top: 46px; bottom: 56px; width: auto; height: auto; overflow: visible; }
-.adfx-chart .trend polyline { fill: none; stroke: rgba(255, 255, 255, 0.98); stroke-width: 2;
-  vector-effect: non-scaling-stroke;   /* 線寬固定 2px、不被拉粗;純實線、不用 dash */
-  stroke-linecap: round; stroke-linejoin: round; }
-/* 圓餅圖(甜甜圈):四段不同明度,過場時旋轉縮放進場 */
-.adfx-chart .chart-pie svg { width: 144px; height: 144px; }
-.adfx-chart .seg { fill: none; stroke-width: 7; }   /* 各段間留 ~2 空隙,分區更清楚 */
-.adfx-chart .sg1 { stroke: rgba(255, 255, 255, 0.60); stroke-dasharray: 36 64; stroke-dashoffset: 0; }
-.adfx-chart .sg2 { stroke: rgba(255, 255, 255, 0.44); stroke-dasharray: 25 75; stroke-dashoffset: -38; }
-.adfx-chart .sg3 { stroke: rgba(255, 255, 255, 0.30); stroke-dasharray: 18 82; stroke-dashoffset: -65; }
-.adfx-chart .sg4 { stroke: rgba(255, 255, 255, 0.18); stroke-dasharray: 13 87; stroke-dashoffset: -85; }
-@keyframes barMode {
-  0%, 40% { opacity: 1; transform: scale(1); }
-  49%, 91% { opacity: 0; transform: scale(0.82); }
-  100% { opacity: 1; transform: scale(1); }
+/* 水平格線,給分析圖的底 */
+.adfx-perf .perf-grid {
+  position: absolute; left: clamp(30px, 10%, 72px); right: clamp(18px, 6%, 38px);
+  top: 38px; bottom: 46px; display: flex; flex-direction: column; justify-content: space-between;
 }
-@keyframes pieMode {
-  0%, 41% { opacity: 0; transform: scale(0.55) rotate(-60deg); }
-  50%, 90% { opacity: 1; transform: scale(1) rotate(0deg); }
-  100% { opacity: 0; transform: scale(0.55) rotate(-60deg); }
+.adfx-perf .perf-grid i { display: block; height: 1px; background: rgba(255, 255, 255, 0.13); }
+/* 發光資料點,落在曲線右上端點 */
+.adfx-perf .perf-dot {
+  position: absolute; left: 89%; top: 60px;
+  width: 11px; height: 11px; border-radius: 50%; background: #fff;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 8px 1px rgba(255, 255, 255, 0.6);
+  animation: perfPulse 2.4s ease-out infinite;
+}
+@keyframes perfPulse {
+  0% { box-shadow: 0 0 8px 1px rgba(255, 255, 255, 0.6), 0 0 0 0 rgba(255, 255, 255, 0.5); }
+  70% { box-shadow: 0 0 8px 1px rgba(255, 255, 255, 0.6), 0 0 0 13px rgba(255, 255, 255, 0); }
+  100% { box-shadow: 0 0 8px 1px rgba(255, 255, 255, 0.6), 0 0 0 0 rgba(255, 255, 255, 0); }
+}
+/* 掃描微光,左→右緩慢掠過,帶來即時感 */
+.adfx-perf .perf-sweep {
+  position: absolute; top: 0; bottom: 0; left: 0; width: 34%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+  animation: perfSweep 4.6s ease-in-out infinite;
+}
+@keyframes perfSweep {
+  0% { transform: translateX(-110%); opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translateX(330%); opacity: 0; }
 }
 
 /* ===== RWD ===== */
