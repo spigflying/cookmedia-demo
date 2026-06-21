@@ -346,11 +346,23 @@ a.contact__item:hover { opacity: 0.7; }
   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.10);
 }
 
-/* 卡1:手機 + 輪播廣告版位 */
-.adfx-phone { display: grid; place-items: center; }
+/* 卡1:手機 + 輪播廣告版位 + 飄入的廣告素材 */
+.adfx-phone { display: flex; align-items: center; justify-content: center; padding-bottom: 26px; }
 .adfx-phone .ph {
-  width: 116px; height: 210px; border-radius: 24px; padding: 22px 12px 14px;
-  display: flex; flex-direction: column; gap: 9px; position: relative;
+  width: 128px; height: 226px; border-radius: 26px; padding: 24px 13px 15px;
+  display: flex; flex-direction: column; gap: 10px; position: relative;
+}
+/* 飄入的廣告素材小卡(左側),填補空白、呼應「投放版位」 */
+.adfx-phone .creative {
+  position: absolute; top: 28%; left: 20%; width: 80px; height: 52px;
+  border-radius: 12px; display: grid; place-items: center;
+  color: rgba(255, 255, 255, 0.9); font-family: var(--mono); font-size: 0.6rem;
+  font-weight: 700; letter-spacing: 0.12em;
+  animation: creativeFloat 3.6s ease-in-out infinite;
+}
+@keyframes creativeFloat {
+  0%, 100% { transform: translate(0, 0); opacity: 0.5; }
+  50% { transform: translate(12px, -9px); opacity: 0.95; }
 }
 .adfx-phone .ph-notch {
   position: absolute; top: 9px; left: 50%; transform: translateX(-50%);
@@ -384,10 +396,11 @@ a.contact__item:hover { opacity: 0.7; }
   width: 24px; height: 18px; border-radius: 12px 12px 5px 5px;
   background: rgba(255, 255, 255, 0.30); border: 1px solid rgba(255, 255, 255, 0.45);
 }
-.adfx-aud .a1 { top: 26%; left: 18%; } .adfx-aud .a2 { top: 56%; left: 30%; }
-.adfx-aud .a3 { top: 36%; left: 50%; animation: audHot 5s ease-in-out infinite; }
-.adfx-aud .a4 { top: 62%; left: 66%; } .adfx-aud .a5 { top: 24%; left: 76%; }
-.adfx-aud .a6 { top: 70%; left: 48%; }
+/* 對稱環狀構圖:中心 a3 為被鎖定者,其餘均勻環繞(左右對稱於中軸) */
+.adfx-aud .a1 { top: 20%; left: 30%; } .adfx-aud .a5 { top: 20%; left: 64%; }
+.adfx-aud .a2 { top: 50%; left: 16%; } .adfx-aud .a4 { top: 50%; left: 78%; }
+.adfx-aud .a6 { top: 70%; left: 47%; }
+.adfx-aud .a3 { top: 44%; left: 47%; animation: audHot 5s ease-in-out infinite; }
 @keyframes audHot {
   0%, 35%, 100% { opacity: 0.85; filter: none; }
   55%, 78% { opacity: 1; filter: drop-shadow(0 0 7px rgba(255, 255, 255, 0.85)); }
@@ -403,11 +416,11 @@ a.contact__item:hover { opacity: 0.7; }
 .adfx-aud .reticle::before { left: 50%; top: -7px; bottom: -7px; width: 2px; transform: translateX(-50%); }
 .adfx-aud .reticle::after { top: 50%; left: -7px; right: -7px; height: 2px; transform: translateY(-50%); }
 @keyframes reticleMove {
-  0%   { top: 30%; left: 80%; transform: translate(-50%, -50%) scale(1); opacity: 0.45; }
-  28%  { top: 60%; left: 34%; transform: translate(-50%, -50%) scale(1); opacity: 0.55; }
-  52%  { top: 44%; left: 54%; transform: translate(-50%, -50%) scale(0.78); opacity: 1; }
-  70%  { top: 44%; left: 54%; transform: translate(-50%, -50%) scale(1); opacity: 1; }
-  100% { top: 30%; left: 80%; transform: translate(-50%, -50%) scale(1); opacity: 0.45; }
+  0%   { top: 26%; left: 68%; transform: translate(-50%, -50%) scale(1); opacity: 0.45; }
+  28%  { top: 56%; left: 20%; transform: translate(-50%, -50%) scale(1); opacity: 0.55; }
+  52%  { top: 50%; left: 51%; transform: translate(-50%, -50%) scale(0.78); opacity: 1; }
+  70%  { top: 50%; left: 51%; transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  100% { top: 26%; left: 68%; transform: translate(-50%, -50%) scale(1); opacity: 0.45; }
 }
 
 /* 卡3:多元媒體 4 格輪亮 */
@@ -445,9 +458,10 @@ a.contact__item:hover { opacity: 0.7; }
   top: 46px; bottom: 56px; width: auto; height: auto; overflow: visible; }
 .adfx-chart .trend polyline { fill: none; stroke: rgba(255, 255, 255, 0.98); stroke-width: 2;
   vector-effect: non-scaling-stroke;   /* 線寬固定 2px,不被 viewBox 非等比拉粗 */
-  stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 170; stroke-dashoffset: 0;
+  stroke-linecap: round; stroke-linejoin: round;
+  stroke-dasharray: 1; stroke-dashoffset: 0;   /* 配合 pathLength=1,整條線=1 段,不會露出虛線縫 */
   animation: drawLine 2.8s ease-in-out infinite; }
-@keyframes drawLine { 0% { stroke-dashoffset: 170; } 55%, 100% { stroke-dashoffset: 0; } }
+@keyframes drawLine { 0% { stroke-dashoffset: 1; } 55%, 100% { stroke-dashoffset: 0; } }
 .adfx-chart .spark { position: absolute; top: 40px; right: clamp(30px, 11%, 74px);
   width: 9px; height: 9px; border-radius: 50%; background: #fff;
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.9); animation: sparkPulse 2.8s ease-in-out infinite; }
