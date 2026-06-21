@@ -8,13 +8,13 @@
   --faint: #bdb4ad;     /* 未啟用清單項:淺灰 */
   --line: rgba(20, 17, 15, 0.12);
   --line-soft: rgba(20, 17, 15, 0.07);
-  /* 朱橘紅家族(取樣自箭頭 icon):主色 + 提亮 + 壓暗 */
-  --red: #eb5f43;       /* 箭頭朱橘紅,主重點色 */
-  --red-deep: #c0432b;  /* 深朱紅,壓暗/陰影 */
-  --rose: #ff8568;      /* 淺珊瑚,提亮/hover */
-  /* 漸層走朱橘紅家族 */
-  --grad: linear-gradient(135deg, #ffb9a3 0%, #f47a5c 50%, #eb5f43 100%);
-  --grad-2: linear-gradient(135deg, #ff8568 0%, #eb5f43 55%, #b83a24 100%);
+  /* 深酒紅家族(品牌主色 #8A1A2A):主色 + 提亮 + 壓暗 */
+  --red: #8a1a2a;       /* 深酒紅,主重點色 */
+  --red-deep: #63131e;  /* 更深酒紅,壓暗/陰影 */
+  --rose: #b6717b;      /* 淺玫瑰,提亮/hover */
+  /* 漸層走深酒紅家族 */
+  --grad: linear-gradient(135deg, #d3a8ae 0%, #b6717b 50%, #8a1a2a 100%);
+  --grad-2: linear-gradient(135deg, #b6717b 0%, #8a1a2a 55%, #63131e 100%);
   --maxw: 1180px;
   --mono: "JetBrains Mono", "Noto Sans TC", ui-monospace, monospace;          /* 內文 / UI 等寬(中文 fallback Noto) */
   --display: "Martian Mono", "JetBrains Mono", "Noto Sans TC", monospace;     /* 大標 / 大數字(中文 fallback Noto) */
@@ -186,13 +186,13 @@ section { padding: clamp(4rem, 10vh, 7rem) clamp(1.2rem, 5vw, 3rem); }
 }
 .stat__live .dot {
   width: 7px; height: 7px; border-radius: 50%; background: var(--red);
-  box-shadow: 0 0 0 0 rgba(235, 95, 67, 0.5);
+  box-shadow: 0 0 0 0 rgba(138, 26, 42, 0.5);
   animation: livePulse 1.6s ease-out infinite;
 }
 @keyframes livePulse {
-  0%   { box-shadow: 0 0 0 0 rgba(235, 95, 67, 0.5); }
-  70%  { box-shadow: 0 0 0 8px rgba(235, 95, 67, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(235, 95, 67, 0); }
+  0%   { box-shadow: 0 0 0 0 rgba(138, 26, 42, 0.5); }
+  70%  { box-shadow: 0 0 0 8px rgba(138, 26, 42, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(138, 26, 42, 0); }
 }
 /* 大數字:四格統一尺度與高度帶,數字靠底對齊 → 標籤橫向對齊、成套 */
 .stat__num {
@@ -254,7 +254,7 @@ section { padding: clamp(4rem, 10vh, 7rem) clamp(1.2rem, 5vw, 3rem); }
 .feature__mock {
   border-radius: 20px; height: 300px; margin: 1.4rem 0 1.8rem;
   background: var(--grad); border: 1px solid rgba(255,255,255,0.6);
-  box-shadow: 0 24px 60px rgba(192, 67, 43, 0.18);
+  box-shadow: 0 24px 60px rgba(99, 19, 30, 0.18);
   position: relative; overflow: hidden;
 }
 .feature__mock span {
@@ -263,8 +263,8 @@ section { padding: clamp(4rem, 10vh, 7rem) clamp(1.2rem, 5vw, 3rem); }
   text-transform: uppercase; color: rgba(255,255,255,0.85);
 }
 .feature:nth-child(2) .feature__mock { background: var(--grad-2); }
-.feature:nth-child(3) .feature__mock { background: linear-gradient(135deg, #e8704f, #a8331c); }
-.feature:nth-child(4) .feature__mock { background: linear-gradient(135deg, #ff9277, #eb5f43); }
+.feature:nth-child(3) .feature__mock { background: var(--grad); }
+.feature:nth-child(4) .feature__mock { background: var(--grad-2); }
 .feature h3 { font-family: var(--sans); font-weight: 700; font-size: 1.5rem; margin-bottom: 0.7rem; }
 .feature p { font-family: var(--mono); color: var(--muted); font-size: 0.85rem; line-height: 1.8; max-width: 460px; }
 

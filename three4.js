@@ -37,7 +37,7 @@ async function init(mount) {
   const key = new THREE.DirectionalLight(0xffffff, 2.6);
   key.position.set(2.5, 3, 4);
   scene.add(key);
-  const rim = new THREE.DirectionalLight(0xeb5f43, 1.4);  // 朱橘紅邊光,呼應品牌色
+  const rim = new THREE.DirectionalLight(0x8a1a2a, 1.4);  // 深酒紅邊光,呼應品牌色
   rim.position.set(-3, -1, 2);
   scene.add(rim);
 
@@ -61,14 +61,14 @@ async function init(mount) {
   // 亮橘色自發光圓環 + 外圈柔光暈,透過毛玻璃散射成柔和的發光圓圈
   const backdrop = new THREE.Group();
   const tubeMat = new THREE.MeshStandardMaterial({
-    color: 0xffb78f, emissive: 0xff7a3a, emissiveIntensity: 2.4, roughness: 0.5, metalness: 0,
+    color: 0xd3a8ae, emissive: 0x8a1a2a, emissiveIntensity: 2.4, roughness: 0.5, metalness: 0,
   });
   const tube = new THREE.Mesh(new THREE.TorusGeometry(0.5, 0.085, 32, 160), tubeMat);
   // 外圈柔光暈:較粗、半透明、疊加混色,模擬燈管的光暈
   const halo = new THREE.Mesh(
     new THREE.TorusGeometry(0.5, 0.22, 24, 120),
     new THREE.MeshBasicMaterial({
-      color: 0xff8a4a, transparent: true, opacity: 0.16,
+      color: 0xb6717b, transparent: true, opacity: 0.16,
       blending: THREE.AdditiveBlending, depthWrite: false,
     })
   );
@@ -84,7 +84,7 @@ async function init(mount) {
     transmission: 1.0,              // 全透光,玻璃感更強
     thickness: 0.5,                 // 薄 → 內部染色很淡
     ior: 1.45,
-    attenuationColor: 0xeb5f43,     // 僅淡淡一抹朱橘紅
+    attenuationColor: 0x8a1a2a,     // 僅淡淡一抹深酒紅
     attenuationDistance: 3.0,       // 距離大 → 染色極淡,接近透明
     clearcoat: 0.5,                 // 表面清漆,霧面仍有光澤
     clearcoatRoughness: 0.35,

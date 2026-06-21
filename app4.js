@@ -14,9 +14,9 @@ function buildMosaic() {
   for (let i = 0; i < N; i++) {
     const c = document.createElement("div");
     c.className = "cell";
-    // 統一朱橘紅同色系,低 alpha 形成靜態深淺底紋
+    // 統一深酒紅同色系,低 alpha 形成靜態深淺底紋
     const a = (0.03 + Math.random() * 0.12).toFixed(3);
-    c.style.background = `rgba(235,95,67,${a})`;
+    c.style.background = `rgba(138,26,42,${a})`;
     frag.appendChild(c);
     cells.push(c);
   }
@@ -71,11 +71,11 @@ mm.add(
         ease: "power1.out",
         stagger: { each: 0.015, from: "random" },
       });
-      // 只挑約四成方塊,在同色系「淺珊瑚 ↔ 深朱紅」間緩慢來回變色,
+      // 只挑約四成方塊,在同色系「淺玫瑰 ↔ 深酒紅」間緩慢來回變色,
       // 營造低調、不規律的閃爍感(其餘維持靜態;減少動態時整段跳過)
       if (!reduceMotion) {
-        const lightC = "rgba(255,133,104,0.05)";
-        const deepC = "rgba(192,67,43,0.30)";
+        const lightC = "rgba(182,113,123,0.05)";
+        const deepC = "rgba(99,19,30,0.30)";
         mosaicCells.forEach((c) => {
           if (Math.random() > 0.4) return;
           gsap.fromTo(
