@@ -59,23 +59,16 @@ async function init(mount) {
 
   // ---- 背景圖案:朱橘紅色系「夥伴集合」圓球聚落,擺在玻璃後面 ----
   // 透過毛玻璃折射出流動色塊,讓玻璃效果更明顯(也呼應「合作品牌客戶」)
-  const palette = [0xeb5f43, 0xf5853a, 0xc0432b];
-  // 只放 3 顆小球,集中在中央偏後,讓「88+」清楚可讀,折射只當點綴
-  const orbLayout = [
-    [-0.22, -0.04, 0.0, 0.22],
-    [0.2, 0.14, -0.08, 0.18],
-    [0.02, -0.26, 0.05, 0.16],
-  ];
+  // 兩個交叉色環,當作有設計感的雕塑,透過毛玻璃折射出流動色弧
   const backdrop = new THREE.Group();
-  orbLayout.forEach((o, i) => {
-    const orb = new THREE.Mesh(
-      new THREE.SphereGeometry(o[3], 32, 32),
-      new THREE.MeshStandardMaterial({ color: palette[i % palette.length], roughness: 0.45, metalness: 0 })
-    );
-    orb.position.set(o[0], o[1], o[2]);
-    backdrop.add(orb);
-  });
-  backdrop.position.z = -0.85;   // 在玻璃(z≈0)後面,才會被玻璃折射
+  const ringMat1 = new THREE.MeshStandardMaterial({ color: 0xeb5f43, roughness: 0.38, metalness: 0.1 });
+  const ringMat2 = new THREE.MeshStandardMaterial({ color: 0xf5853a, roughness: 0.38, metalness: 0.1 });
+  const ring1 = new THREE.Mesh(new THREE.TorusGeometry(0.52, 0.15, 28, 80), ringMat1);
+  const ring2 = new THREE.Mesh(new THREE.TorusGeometry(0.46, 0.12, 28, 80), ringMat2);
+  ring2.rotation.x = Math.PI / 2;   // 與 ring1 交叉
+  backdrop.add(ring1, ring2);
+  backdrop.rotation.set(0.5, 0.35, 0);
+  backdrop.position.z = -0.85;      // 在玻璃(z≈0)後面,才會被玻璃折射
   scene.add(backdrop);
 
   // ---- 透明毛玻璃材質(PBR 物理材質):全透光 + 適度霧面,只剩極淡朱橘紅 ----
@@ -122,7 +115,8 @@ async function init(mount) {
   renderer.setAnimationLoop(() => {
     const dt = clock.getDelta();
     mesh.rotation.y += dt * 0.6;        // 玻璃「88+」約 5.7 秒一圈,優雅不暈
-    backdrop.rotation.z += dt * 0.18;   // 背景聚落反向緩轉,折射色塊隨之流動
+    backdrop.rotation.y += dt * 0.25;   // 背景色環反向緩轉,折射色弧隨之流動
+    backdrop.rotation.x += dt * 0.1;
     renderer.render(scene, camera);
   });
 }
