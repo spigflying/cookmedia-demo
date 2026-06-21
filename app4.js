@@ -114,19 +114,72 @@ mm.add(
       });
     });
 
-    /* ---------- 5. 數據:數字滾動 ---------- */
-    gsap.utils.toArray("[data-stat]").forEach((stat, i) => {
+    /* ---------- 5. 數據:四格依序進場 + 各自的動畫 ----------
+     * 用單一 master timeline(只掛一個 ScrollTrigger),四格以較大間隔依序登場,
+     * 慢到看得到進場動畫。其中:
+     *   data-spin → 大數字繞 Y 軸 3D 水平旋轉一圈
+     *   data-live → 數字滾完後持續往上跳動,像即時數據 */
+    const stats = gsap.utils.toArray("#stats [data-stat]");
+    const statsTl = gsap.timeline({
+      scrollTrigger: { trigger: "#stats", start: "top 72%" },
+    });
+
+    // live:數字滾到目標後,每 1.6 秒 +1 並做一次心跳縮放
+    function startLive(numEl, from) {
+      let v = from;
+      const numWrap = numEl.parentElement;   // .stat__num(block,可套用 transform)
+      const tick = () => {
+        v += 1;
+        numEl.textContent = v;
+        gsap.fromTo(numWrap, { scale: 1.1 }, { scale: 1, duration: 0.45, ease: "power2.out" });
+        gsap.delayedCall(1.6, tick);
+      };
+      gsap.delayedCall(1.6, tick);
+    }
+
+    stats.forEach((stat, i) => {
+      const at = i * 0.55 * d;        // 依序間隔放大,一格一格欣賞
+      const numWrap = stat.querySelector(".stat__num");
       const numEl = stat.querySelector(".count");
       const target = +numEl.dataset.to;
+
+      // (a) 整格淡入上移
+      statsTl.from(
+        stat,
+        { autoAlpha: 0, y: 56, duration: 1.0 * d, ease: "power3.out" },
+        at
+      );
+
+      // (b) data-spin:大數字 3D 360° 水平旋轉(與淡入同時)
+      if (stat.hasAttribute("data-spin")) {
+        statsTl.from(
+          numWrap,
+          {
+            rotationY: 360,
+            transformPerspective: 800,
+            transformOrigin: "50% 50%",
+            duration: 1.7 * d,
+            ease: "power2.out",
+          },
+          at
+        );
+      }
+
+      // (c) 數字滾動(放慢);live 格滾完後接續即時跳動
       const obj = { v: 0 };
-      gsap.to(obj, {
-        v: target,
-        duration: 2.4 * d,           // 放慢數字滾動,更有質感
-        ease: "power3.out",          // 尾段更緩,數字優雅停下
-        delay: i * 0.15,             // 四格依序錯開,節奏更明顯
-        scrollTrigger: { trigger: stat, start: "top 88%" },
-        onUpdate: () => (numEl.textContent = Math.round(obj.v)),
-      });
+      statsTl.to(
+        obj,
+        {
+          v: target,
+          duration: 2.4 * d,
+          ease: "power3.out",
+          onUpdate: () => (numEl.textContent = Math.round(obj.v)),
+          onComplete: () => {
+            if (stat.hasAttribute("data-live") && !reduceMotion) startLive(numEl, target);
+          },
+        },
+        at + 0.25            // 淡入後一點點才開始跳數字
+      );
     });
 
     /* ---------- 6. 服務:左 sticky 清單隨右側捲動切換 active ---------- */

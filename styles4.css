@@ -165,8 +165,10 @@ section { padding: clamp(4rem, 10vh, 7rem) clamp(1.2rem, 5vw, 3rem); }
 .hero__actions { display: flex; gap: 0.9rem; flex-wrap: wrap; }
 
 /* ===== 數據(規格表 / 儀表板風)===== */
-.stats .panel { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.6rem; }
-.stat { padding-top: 1rem; border-top: 2px solid var(--red); }
+/* 改 2×2,讓放大後的大數字有展演空間 */
+.stats .panel { display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: clamp(2.4rem, 5vw, 4rem) clamp(2rem, 5vw, 4rem); }
+.stat { padding-top: 1.3rem; border-top: 3px solid var(--red); }
 /* 頂部編號列 */
 .stat__head {
   display: flex; justify-content: space-between; align-items: center;
@@ -176,13 +178,30 @@ section { padding: clamp(4rem, 10vh, 7rem) clamp(1.2rem, 5vw, 3rem); }
   font-weight: 700; color: var(--muted); }
 .stat__ico { color: var(--faint); font-size: 1rem; transition: transform 0.3s var(--ease), color 0.3s; }
 .stat:hover .stat__ico { color: var(--red); transform: translate(3px, -3px); }
-/* 大數字 */
-.stat__num {
-  font-family: var(--display); font-weight: 700; line-height: 0.95;
-  font-size: clamp(2.2rem, 5vw, 3.6rem); letter-spacing: -0.04em;
-  display: flex; align-items: baseline; gap: 0.05rem;
+/* LIVE 徽章:酒紅小藥丸 + 脈動圓點 */
+.stat__live {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-size: 0.62rem; letter-spacing: 0.18em; font-weight: 700;
+  color: var(--red); text-transform: uppercase;
 }
-.stat__num i { font-style: normal; font-size: 1.15rem; color: var(--muted); margin-left: 0.1rem; }
+.stat__live .dot {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--red);
+  box-shadow: 0 0 0 0 rgba(142, 27, 35, 0.5);
+  animation: livePulse 1.6s ease-out infinite;
+}
+@keyframes livePulse {
+  0%   { box-shadow: 0 0 0 0 rgba(142, 27, 35, 0.5); }
+  70%  { box-shadow: 0 0 0 8px rgba(142, 27, 35, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(142, 27, 35, 0); }
+}
+/* 大數字(放大 ~2x,科技儀表板感) */
+.stat__num {
+  font-family: var(--display); font-weight: 700; line-height: 0.92;
+  font-size: clamp(4rem, 9vw, 7rem); letter-spacing: -0.04em;
+  display: flex; align-items: baseline; gap: 0.05rem;
+  will-change: transform;
+}
+.stat__num i { font-style: normal; font-size: 1.7rem; color: var(--muted); margin-left: 0.15rem; }
 /* 中文說明(放大、清楚) */
 .stat__label {
   font-family: var(--sans); color: var(--ink); font-size: 1rem;
