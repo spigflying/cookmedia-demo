@@ -194,29 +194,30 @@ section { padding: clamp(4rem, 10vh, 7rem) clamp(1.2rem, 5vw, 3rem); }
   70%  { box-shadow: 0 0 0 8px rgba(235, 95, 67, 0); }
   100% { box-shadow: 0 0 0 0 rgba(235, 95, 67, 0); }
 }
-/* 大數字(放大 ~2x,科技儀表板感) */
+/* 大數字:四格統一尺度與高度帶,數字靠底對齊 → 標籤橫向對齊、成套 */
 .stat__num {
   font-family: var(--display); font-weight: 700; line-height: 0.92;
-  font-size: clamp(4rem, 9vw, 7rem); letter-spacing: -0.04em;
-  display: flex; align-items: baseline; gap: 0.05rem;
+  font-size: clamp(2.8rem, 5.6vw, 4.4rem); letter-spacing: -0.04em;
+  display: flex; align-items: flex-end; gap: 0.05rem;
+  min-height: clamp(100px, 13vw, 140px);   /* 四格數字區同高,下方標籤才會對齊 */
   will-change: transform;
 }
-.stat__num i { font-style: normal; font-size: 1.7rem; color: var(--muted); margin-left: 0.15rem; }
-/* Live 跑馬錶:長數字改用較小等寬字 + 等寬數字(tabular),個位跳動不抖動 */
+.stat__num i { font-style: normal; font-size: 1.35rem; color: var(--muted); margin-left: 0.15rem; line-height: 1.4; }
+/* Live 跑馬錶:長數字用等寬字 + 等寬數字(tabular),尺度與其他三格相稱 */
 .stat[data-live] .stat__num {
-  font-family: var(--mono); font-size: clamp(2rem, 6.2vw, 4.6rem);
-  letter-spacing: -0.03em; font-variant-numeric: tabular-nums; line-height: 1.1;
+  font-family: var(--mono); font-size: clamp(1.7rem, 4.6vw, 3.2rem);
+  letter-spacing: -0.03em; font-variant-numeric: tabular-nums; line-height: 1.05;
   white-space: nowrap;
 }
-.stat[data-live] .stat__num i { font-size: 1.5rem; }
-/* 3D 毛玻璃數字掛載點(Three.js canvas),縮小讓「+」與標籤更靠近 */
+.stat[data-live] .stat__num i { font-size: 1.2rem; }
+/* 3D 毛玻璃數字掛載點(Three.js canvas):高度對齊數字帶,寬度容納「88+」 */
 .stat__num--3d { align-items: center; gap: 0.1rem; }
 .three-mount {
-  width: clamp(200px, 30vw, 340px); height: clamp(110px, 16vw, 180px); display: block;
+  width: clamp(180px, 26vw, 300px); height: clamp(100px, 13vw, 140px); display: block;
 }
 .three-mount canvas { width: 100% !important; height: 100% !important; display: block; }
 /* WebGL 不可用時的退場:仍顯示平面大數字 */
-.three-mount .fallback { font-family: var(--display); font-weight: 700; font-size: clamp(4rem, 9vw, 7rem); }
+.three-mount .fallback { font-family: var(--display); font-weight: 700; font-size: clamp(2.8rem, 5.6vw, 4.4rem); }
 /* 中文說明(放大、清楚) */
 .stat__label {
   font-family: var(--sans); color: var(--ink); font-size: 1rem;

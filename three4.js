@@ -59,14 +59,12 @@ async function init(mount) {
 
   // ---- 背景圖案:朱橘紅色系「夥伴集合」圓球聚落,擺在玻璃後面 ----
   // 透過毛玻璃折射出流動色塊,讓玻璃效果更明顯(也呼應「合作品牌客戶」)
-  const palette = [0xeb5f43, 0xf5853a, 0xc0432b, 0xff8568, 0xe23b2e];
+  const palette = [0xeb5f43, 0xf5853a, 0xc0432b];
+  // 只放 3 顆小球,集中在中央偏後,讓「88+」清楚可讀,折射只當點綴
   const orbLayout = [
-    [-0.62, 0.28, 0.0, 0.34],
-    [0.58, 0.34, -0.15, 0.3],
-    [0.08, -0.5, 0.12, 0.38],
-    [-0.4, -0.22, -0.18, 0.26],
-    [0.5, -0.18, 0.06, 0.24],
-    [-0.05, 0.56, -0.1, 0.22],
+    [-0.22, -0.04, 0.0, 0.22],
+    [0.2, 0.14, -0.08, 0.18],
+    [0.02, -0.26, 0.05, 0.16],
   ];
   const backdrop = new THREE.Group();
   orbLayout.forEach((o, i) => {
@@ -77,7 +75,7 @@ async function init(mount) {
     orb.position.set(o[0], o[1], o[2]);
     backdrop.add(orb);
   });
-  backdrop.position.z = -1.1;   // 在玻璃(z≈0)後面,才會被玻璃折射
+  backdrop.position.z = -0.85;   // 在玻璃(z≈0)後面,才會被玻璃折射
   scene.add(backdrop);
 
   // ---- 透明毛玻璃材質(PBR 物理材質):全透光 + 適度霧面,只剩極淡朱橘紅 ----
