@@ -26,7 +26,7 @@ async function init(mount) {
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(35, w0 / h0, 0.1, 100);
-  camera.position.set(0, 0, 2.9);   // 拉近一點,讓 88 在畫面中更大
+  camera.position.set(0, 0, 3.3);   // 容納較寬的「88+」,避免裁切
 
   // ---- 環境反射:RoomEnvironment 經 PMREM 產生 envMap,金屬才有東西可反射 ----
   const pmrem = new THREE.PMREMGenerator(renderer);
@@ -41,11 +41,11 @@ async function init(mount) {
   rim.position.set(-3, -1, 2);
   scene.add(rim);
 
-  // ---- 載入字體並建立「88」立體幾何 ----
+  // ---- 載入字體並建立「88+」立體幾何(「+」也一起做成玻璃)----
   const font = await new FontLoader().loadAsync(
     "https://unpkg.com/three@0.160.0/examples/fonts/helvetiker_bold.typeface.json"
   );
-  const geo = new TextGeometry("88", {
+  const geo = new TextGeometry("88+", {
     font,
     size: 1,
     height: 0.34,           // 擠出厚度:旋轉時看得到側面,才有 3D 感
@@ -56,6 +56,29 @@ async function init(mount) {
     bevelSegments: 4,
   });
   geo.center();
+
+  // ---- 背景圖案:朱橘紅色系「夥伴集合」圓球聚落,擺在玻璃後面 ----
+  // 透過毛玻璃折射出流動色塊,讓玻璃效果更明顯(也呼應「合作品牌客戶」)
+  const palette = [0xeb5f43, 0xf5853a, 0xc0432b, 0xff8568, 0xe23b2e];
+  const orbLayout = [
+    [-0.62, 0.28, 0.0, 0.34],
+    [0.58, 0.34, -0.15, 0.3],
+    [0.08, -0.5, 0.12, 0.38],
+    [-0.4, -0.22, -0.18, 0.26],
+    [0.5, -0.18, 0.06, 0.24],
+    [-0.05, 0.56, -0.1, 0.22],
+  ];
+  const backdrop = new THREE.Group();
+  orbLayout.forEach((o, i) => {
+    const orb = new THREE.Mesh(
+      new THREE.SphereGeometry(o[3], 32, 32),
+      new THREE.MeshStandardMaterial({ color: palette[i % palette.length], roughness: 0.45, metalness: 0 })
+    );
+    orb.position.set(o[0], o[1], o[2]);
+    backdrop.add(orb);
+  });
+  backdrop.position.z = -1.1;   // 在玻璃(z≈0)後面,才會被玻璃折射
+  scene.add(backdrop);
 
   // ---- 透明毛玻璃材質(PBR 物理材質):全透光 + 適度霧面,只剩極淡朱橘紅 ----
   const mat = new THREE.MeshPhysicalMaterial({
@@ -99,7 +122,9 @@ async function init(mount) {
   }
   const clock = new THREE.Clock();
   renderer.setAnimationLoop(() => {
-    mesh.rotation.y += clock.getDelta() * 0.6;   // 約 5.7 秒一圈,優雅不暈
+    const dt = clock.getDelta();
+    mesh.rotation.y += dt * 0.6;        // 玻璃「88+」約 5.7 秒一圈,優雅不暈
+    backdrop.rotation.z += dt * 0.18;   // 背景聚落反向緩轉,折射色塊隨之流動
     renderer.render(scene, camera);
   });
 }
