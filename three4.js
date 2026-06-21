@@ -26,7 +26,7 @@ async function init(mount) {
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(35, w0 / h0, 0.1, 100);
-  camera.position.set(0, 0, 3.4);
+  camera.position.set(0, 0, 2.9);   // 拉近一點,讓 88 在畫面中更大
 
   // ---- 環境反射:RoomEnvironment 經 PMREM 產生 envMap,金屬才有東西可反射 ----
   const pmrem = new THREE.PMREMGenerator(renderer);
@@ -57,12 +57,20 @@ async function init(mount) {
   });
   geo.center();
 
-  // ---- 朱橘紅金屬材質(PBR):金屬感拉滿、適度粗糙度給柔反光 ----
-  const mat = new THREE.MeshStandardMaterial({
-    color: 0xeb5f43,
-    metalness: 1.0,
-    roughness: 0.28,
-    envMapIntensity: 1.2,
+  // ---- 毛玻璃材質(PBR 物理材質):透光 + 高粗糙度做霧面,玻璃內透出朱橘紅 ----
+  const mat = new THREE.MeshPhysicalMaterial({
+    color: 0xffffff,
+    metalness: 0,
+    roughness: 0.6,                 // 高粗糙度 → 霧面毛玻璃
+    transmission: 0.96,             // 透光玻璃
+    thickness: 1.4,                 // 厚度影響折射與內部染色
+    ior: 1.5,
+    attenuationColor: 0xeb5f43,     // 透過玻璃時染上朱橘紅
+    attenuationDistance: 0.7,
+    clearcoat: 0.4,                 // 表面一層清漆,給霧面一點光澤
+    clearcoatRoughness: 0.5,
+    envMapIntensity: 1.1,
+    transparent: true,
   });
   const mesh = new THREE.Mesh(geo, mat);
   mesh.rotation.x = -0.12;        // 微微俯角,金屬面更立體

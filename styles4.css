@@ -204,14 +204,15 @@ section { padding: clamp(4rem, 10vh, 7rem) clamp(1.2rem, 5vw, 3rem); }
 .stat__num i { font-style: normal; font-size: 1.7rem; color: var(--muted); margin-left: 0.15rem; }
 /* Live 跑馬錶:長數字改用較小等寬字 + 等寬數字(tabular),個位跳動不抖動 */
 .stat[data-live] .stat__num {
-  font-family: var(--mono); font-size: clamp(1.5rem, 4vw, 2.6rem);
-  letter-spacing: -0.01em; font-variant-numeric: tabular-nums; line-height: 1.1;
+  font-family: var(--mono); font-size: clamp(2rem, 5.8vw, 4rem);
+  letter-spacing: -0.03em; font-variant-numeric: tabular-nums; line-height: 1.1;
+  white-space: nowrap;
 }
-.stat[data-live] .stat__num i { font-size: 1.05rem; }
-/* 3D 金屬數字掛載點(Three.js canvas) */
+.stat[data-live] .stat__num i { font-size: 1.4rem; }
+/* 3D 毛玻璃數字掛載點(Three.js canvas),放大約 1.8x */
 .stat__num--3d { align-items: center; gap: 0.25rem; }
 .three-mount {
-  width: clamp(150px, 24vw, 260px); height: clamp(96px, 14vw, 150px); display: block;
+  width: clamp(260px, 38vw, 440px); height: clamp(170px, 22vw, 260px); display: block;
 }
 .three-mount canvas { width: 100% !important; height: 100% !important; display: block; }
 /* WebGL 不可用時的退場:仍顯示平面大數字 */
