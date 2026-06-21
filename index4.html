@@ -161,9 +161,13 @@
                       <stop offset="0" stop-color="rgba(255,255,255,0.34)"/>
                       <stop offset="1" stop-color="rgba(255,255,255,0)"/>
                     </linearGradient>
+                    <!-- 由左往右擦出的遮罩,進場時動畫加寬 width 來「畫」出趨勢圖 -->
+                    <clipPath id="perfClip"><rect id="perfClipRect" x="0" y="0" width="100" height="56"/></clipPath>
                   </defs>
-                  <path class="perf-area" d="M2,47 C16,45 24,38 38,35 C52,32 58,22 72,17 C82,13 90,9 98,6 L98,56 L2,56 Z" fill="url(#perfFill)"/>
-                  <path class="perf-line" d="M2,47 C16,45 24,38 38,35 C52,32 58,22 72,17 C82,13 90,9 98,6" fill="none"/>
+                  <g clip-path="url(#perfClip)">
+                    <path class="perf-area" d="M2,47 C16,45 24,38 38,35 C52,32 58,22 72,17 C82,13 90,9 98,6 L98,56 L2,56 Z" fill="url(#perfFill)"/>
+                    <path class="perf-line" d="M2,47 C16,45 24,38 38,35 C52,32 58,22 72,17 C82,13 90,9 98,6" fill="none"/>
+                  </g>
                 </svg>
                 <span class="perf-dot"></span>
                 <div class="perf-sweep"></div>

@@ -127,6 +127,7 @@ mm.add(
     const LIVE_BASE = 1502318477;     // 廣告總曝光起始基數(> 15 億)
     const fmt = (n) => Math.round(n).toLocaleString("en-US");   // 千分位
     let liveTimer = null;             // 供 cleanup 清除
+    let perfCleanup = null;           // 績效卡 resize 監聽的解除函式
 
     stats.forEach((stat, i) => {
       const at = i * 0.55 * d;        // 依序間隔放大,一格一格欣賞
@@ -200,6 +201,78 @@ mm.add(
       });
     });
 
+    /* ---------- 6.5 績效卡:趨勢圖由左往右「畫」出 + 光點貼著筆尖跑(全程不位移,不會溢出) ---------- */
+    const perf = document.querySelector(".adfx-perf");
+    if (perf) {
+      const line = perf.querySelector(".perf-line");
+      const dot = perf.querySelector(".perf-dot");
+      const grid = perf.querySelectorAll(".perf-grid i");
+      const clipRect = perf.querySelector("#perfClipRect"); // 擦出遮罩,加寬即畫出圖表
+      const L = line.getTotalLength();
+
+      // 曲線在 x 上單調遞增,沿長度二分搜尋找出指定 x 對應的點。
+      // (perf-line 用了 non-scaling-stroke,不能用 stroke-dasharray 描邊,故改用 clip 擦出)
+      function userPointAtX(x) {
+        let lo = 0, hi = L;
+        for (let k = 0; k < 22; k++) {
+          const m = (lo + hi) / 2;
+          line.getPointAtLength(m).x < x ? (lo = m) : (hi = m);
+        }
+        return line.getPointAtLength((lo + hi) / 2);
+      }
+      // 把曲線上的點換算成相對卡片的像素位置;用 getScreenCTM 正確處理 preserveAspectRatio="none" 的非等比縮放
+      function placeDot(x) {
+        const up = userPointAtX(x);
+        const s = new DOMPoint(up.x, up.y).matrixTransform(line.getScreenCTM());
+        const r = perf.getBoundingClientRect();
+        gsap.set(dot, { left: s.x - r.left, top: s.y - r.top });
+      }
+
+      // 進場前的初始狀態:圖表未擦出、光點透明、格線收成 0(由左展開)
+      gsap.set(clipRect, { attr: { width: 0 } });
+      gsap.set(dot, { autoAlpha: 0 });
+      gsap.set(grid, { scaleX: 0, transformOrigin: "left center" });
+
+      let revealed = false;
+      // resize 後光點重新貼回曲線終點,避免縮放後位置跑掉
+      const onResize = () => { if (revealed) placeDot(98); };
+
+      if (reduceMotion) {
+        // 開啟「減少動態」:直接顯示最終狀態,不播放動畫
+        gsap.set(clipRect, { attr: { width: 100 } });
+        gsap.set([dot, ...grid], { autoAlpha: 1, scaleX: 1 });
+        revealed = true;
+        placeDot(98);
+      } else {
+        ScrollTrigger.create({
+          trigger: perf.closest(".feature"),
+          start: "top 75%",
+          once: true,
+          onEnter: () => {
+            const proxy = { p: 0 };
+            const tl = gsap.timeline({ onComplete: () => { revealed = true; } });
+            // 1) 底層格線由左展開
+            tl.to(grid, { scaleX: 1, duration: 0.5 * d, stagger: 0.08 * d, ease: "power2.out" }, 0);
+            // 2) 光點先亮起,準備沿曲線前進
+            tl.to(dot, { autoAlpha: 1, duration: 0.25 * d }, 0.15 * d);
+            // 3) 由左往右擦出圖表,光點同步貼著筆尖前進
+            tl.to(proxy, {
+              p: 1,
+              duration: 1.2 * d,
+              ease: "power2.inOut",
+              onUpdate: () => {
+                const x = 2 + 96 * proxy.p;        // 曲線 x 範圍 2→98
+                gsap.set(clipRect, { attr: { width: x } });
+                placeDot(x);
+              },
+            }, 0.15 * d);
+          },
+        });
+      }
+      window.addEventListener("resize", onResize);
+      perfCleanup = () => window.removeEventListener("resize", onResize);
+    }
+
     /* ---------- 7. HOW IT WORKS 交錯進場 ---------- */
     ScrollTrigger.batch(".how__step", {
       start: "top 85%",
@@ -216,6 +289,7 @@ mm.add(
 
     return () => {
       if (liveTimer) clearInterval(liveTimer);   // 切換 media 條件時停掉 live 跑馬錶
+      if (perfCleanup) perfCleanup();             // 解除績效卡 resize 監聽
     };
   }
 );
