@@ -59,7 +59,9 @@
         </div>
         <div class="stat" data-stat data-spin>
           <div class="stat__head"><span class="stat__tag">BRAND PARTNERS</span><span class="stat__ico">↗</span></div>
-          <div class="stat__num"><span class="count" data-to="88">0</span><i>+</i></div>
+          <div class="stat__num stat__num--3d">
+            <div class="three-mount" id="brand3d"><span class="fallback">88</span></div><i>+</i>
+          </div>
           <div class="stat__label">合作品牌客戶</div>
         </div>
         <div class="stat" data-stat>
@@ -69,7 +71,7 @@
         </div>
         <div class="stat" data-stat data-live>
           <div class="stat__head"><span class="stat__tag">IMPRESSIONS</span><span class="stat__live"><i class="dot"></i>LIVE</span></div>
-          <div class="stat__num"><span class="count" data-to="15">0</span><i>億次+</i></div>
+          <div class="stat__num"><span class="count" data-to="15">0</span><i>次</i></div>
           <div class="stat__label">廣告總曝光</div>
         </div>
       </div>
@@ -217,5 +219,16 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
   <script src="app4.js"></script>
+
+  <!-- Three.js:BRAND PARTNERS 的金屬 3D「88」(PBR 金屬材質 + 環境反射 + 持續慢轉) -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+  <script type="module" src="three4.js"></script>
 </body>
 </html>

@@ -1,6 +1,6 @@
-/* ===== 設計變數(等寬科技 / 白紅黑「酒紅·質感」風)===== */
+/* ===== 設計變數(等寬科技 / 白紅黑「朱橘紅·箭頭色」風)===== */
 :root {
-  --bg: #f4f2ee;        /* 主背景:冷調米白(沉穩,不死白) */
+  --bg: #f4f2ee;        /* 主背景:暖米白(不死白) */
   --bg-2: #ece9e3;      /* 略深米白 */
   --panel: #ffffff;     /* 區塊面板:純白卡 */
   --ink: #14110f;       /* 主文字:暖近黑 */
@@ -8,13 +8,13 @@
   --faint: #bdb4ad;     /* 未啟用清單項:淺灰 */
   --line: rgba(20, 17, 15, 0.12);
   --line-soft: rgba(20, 17, 15, 0.07);
-  /* 酒紅的相近色家族:主色 + 提亮 + 壓暗 */
-  --red: #8e1b23;       /* 酒紅 oxblood,主重點色(深而不豔) */
-  --red-deep: #6b1420;  /* 勃根地,壓暗/陰影 */
-  --rose: #c0595e;      /* 灰玫瑰,提亮/hover */
-  /* 漸層走酒紅家族,低彩度、內斂 */
-  --grad: linear-gradient(135deg, #d99aa0 0%, #b04550 50%, #8e1b23 100%);
-  --grad-2: linear-gradient(135deg, #c0595e 0%, #8e1b23 55%, #5a0f18 100%);
+  /* 朱橘紅家族(取樣自箭頭 icon):主色 + 提亮 + 壓暗 */
+  --red: #eb5f43;       /* 箭頭朱橘紅,主重點色 */
+  --red-deep: #c0432b;  /* 深朱紅,壓暗/陰影 */
+  --rose: #ff8568;      /* 淺珊瑚,提亮/hover */
+  /* 漸層走朱橘紅家族 */
+  --grad: linear-gradient(135deg, #ffb9a3 0%, #f47a5c 50%, #eb5f43 100%);
+  --grad-2: linear-gradient(135deg, #ff8568 0%, #eb5f43 55%, #b83a24 100%);
   --maxw: 1180px;
   --mono: "JetBrains Mono", "Noto Sans TC", ui-monospace, monospace;          /* 內文 / UI 等寬(中文 fallback Noto) */
   --display: "Martian Mono", "JetBrains Mono", "Noto Sans TC", monospace;     /* 大標 / 大數字(中文 fallback Noto) */
@@ -186,13 +186,13 @@ section { padding: clamp(4rem, 10vh, 7rem) clamp(1.2rem, 5vw, 3rem); }
 }
 .stat__live .dot {
   width: 7px; height: 7px; border-radius: 50%; background: var(--red);
-  box-shadow: 0 0 0 0 rgba(142, 27, 35, 0.5);
+  box-shadow: 0 0 0 0 rgba(235, 95, 67, 0.5);
   animation: livePulse 1.6s ease-out infinite;
 }
 @keyframes livePulse {
-  0%   { box-shadow: 0 0 0 0 rgba(142, 27, 35, 0.5); }
-  70%  { box-shadow: 0 0 0 8px rgba(142, 27, 35, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(142, 27, 35, 0); }
+  0%   { box-shadow: 0 0 0 0 rgba(235, 95, 67, 0.5); }
+  70%  { box-shadow: 0 0 0 8px rgba(235, 95, 67, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(235, 95, 67, 0); }
 }
 /* 大數字(放大 ~2x,科技儀表板感) */
 .stat__num {
@@ -202,6 +202,20 @@ section { padding: clamp(4rem, 10vh, 7rem) clamp(1.2rem, 5vw, 3rem); }
   will-change: transform;
 }
 .stat__num i { font-style: normal; font-size: 1.7rem; color: var(--muted); margin-left: 0.15rem; }
+/* Live 跑馬錶:長數字改用較小等寬字 + 等寬數字(tabular),個位跳動不抖動 */
+.stat[data-live] .stat__num {
+  font-family: var(--mono); font-size: clamp(1.5rem, 4vw, 2.6rem);
+  letter-spacing: -0.01em; font-variant-numeric: tabular-nums; line-height: 1.1;
+}
+.stat[data-live] .stat__num i { font-size: 1.05rem; }
+/* 3D 金屬數字掛載點(Three.js canvas) */
+.stat__num--3d { align-items: center; gap: 0.25rem; }
+.three-mount {
+  width: clamp(150px, 24vw, 260px); height: clamp(96px, 14vw, 150px); display: block;
+}
+.three-mount canvas { width: 100% !important; height: 100% !important; display: block; }
+/* WebGL 不可用時的退場:仍顯示平面大數字 */
+.three-mount .fallback { font-family: var(--display); font-weight: 700; font-size: clamp(4rem, 9vw, 7rem); }
 /* 中文說明(放大、清楚) */
 .stat__label {
   font-family: var(--sans); color: var(--ink); font-size: 1rem;
@@ -238,7 +252,7 @@ section { padding: clamp(4rem, 10vh, 7rem) clamp(1.2rem, 5vw, 3rem); }
 .feature__mock {
   border-radius: 20px; height: 300px; margin: 1.4rem 0 1.8rem;
   background: var(--grad); border: 1px solid rgba(255,255,255,0.6);
-  box-shadow: 0 24px 60px rgba(90, 15, 24, 0.18);
+  box-shadow: 0 24px 60px rgba(192, 67, 43, 0.18);
   position: relative; overflow: hidden;
 }
 .feature__mock span {
@@ -247,8 +261,8 @@ section { padding: clamp(4rem, 10vh, 7rem) clamp(1.2rem, 5vw, 3rem); }
   text-transform: uppercase; color: rgba(255,255,255,0.85);
 }
 .feature:nth-child(2) .feature__mock { background: var(--grad-2); }
-.feature:nth-child(3) .feature__mock { background: linear-gradient(135deg, #a83d47, #4d0d15); }
-.feature:nth-child(4) .feature__mock { background: linear-gradient(135deg, #c0595e, #8e1b23); }
+.feature:nth-child(3) .feature__mock { background: linear-gradient(135deg, #e8704f, #a8331c); }
+.feature:nth-child(4) .feature__mock { background: linear-gradient(135deg, #ff9277, #eb5f43); }
 .feature h3 { font-family: var(--sans); font-weight: 700; font-size: 1.5rem; margin-bottom: 0.7rem; }
 .feature p { font-family: var(--mono); color: var(--muted); font-size: 0.85rem; line-height: 1.8; max-width: 460px; }
 

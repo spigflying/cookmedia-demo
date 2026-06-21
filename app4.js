@@ -14,9 +14,9 @@ function buildMosaic() {
   for (let i = 0; i < N; i++) {
     const c = document.createElement("div");
     c.className = "cell";
-    // 統一酒紅同色系,低 alpha 形成靜態深淺底紋
+    // 統一朱橘紅同色系,低 alpha 形成靜態深淺底紋
     const a = (0.03 + Math.random() * 0.12).toFixed(3);
-    c.style.background = `rgba(142,27,35,${a})`;
+    c.style.background = `rgba(235,95,67,${a})`;
     frag.appendChild(c);
     cells.push(c);
   }
@@ -71,11 +71,11 @@ mm.add(
         ease: "power1.out",
         stagger: { each: 0.015, from: "random" },
       });
-      // 只挑約四成方塊,在同色系「灰玫瑰 ↔ 勃根地」間緩慢來回變色,
+      // 只挑約四成方塊,在同色系「淺珊瑚 ↔ 深朱紅」間緩慢來回變色,
       // 營造低調、不規律的閃爍感(其餘維持靜態;減少動態時整段跳過)
       if (!reduceMotion) {
-        const lightC = "rgba(192,89,94,0.05)";
-        const deepC = "rgba(107,20,32,0.30)";
+        const lightC = "rgba(255,133,104,0.05)";
+        const deepC = "rgba(192,67,43,0.30)";
         mosaicCells.forEach((c) => {
           if (Math.random() > 0.4) return;
           gsap.fromTo(
@@ -117,31 +117,21 @@ mm.add(
     /* ---------- 5. 數據:四格依序進場 + 各自的動畫 ----------
      * 用單一 master timeline(只掛一個 ScrollTrigger),四格以較大間隔依序登場,
      * 慢到看得到進場動畫。其中:
-     *   data-spin → 大數字繞 Y 軸 3D 水平旋轉一圈
-     *   data-live → 數字滾完後持續往上跳動,像即時數據 */
+     *   data-spin → 金屬 3D「88」,由 three4.js(Three.js)持續慢轉,這裡只負責淡入
+     *   data-live → 數字滾到一個大基數後,個位持續 +1,像即時跑馬錶(不縮放) */
     const stats = gsap.utils.toArray("#stats [data-stat]");
     const statsTl = gsap.timeline({
       scrollTrigger: { trigger: "#stats", start: "top 72%" },
     });
 
-    // live:數字滾到目標後,每 1.6 秒 +1 並做一次心跳縮放
-    function startLive(numEl, from) {
-      let v = from;
-      const numWrap = numEl.parentElement;   // .stat__num(block,可套用 transform)
-      const tick = () => {
-        v += 1;
-        numEl.textContent = v;
-        gsap.fromTo(numWrap, { scale: 1.1 }, { scale: 1, duration: 0.45, ease: "power2.out" });
-        gsap.delayedCall(1.6, tick);
-      };
-      gsap.delayedCall(1.6, tick);
-    }
+    const LIVE_BASE = 1502318477;     // 廣告總曝光起始基數(> 15 億)
+    const fmt = (n) => Math.round(n).toLocaleString("en-US");   // 千分位
+    let liveTimer = null;             // 供 cleanup 清除
 
     stats.forEach((stat, i) => {
       const at = i * 0.55 * d;        // 依序間隔放大,一格一格欣賞
-      const numWrap = stat.querySelector(".stat__num");
       const numEl = stat.querySelector(".count");
-      const target = +numEl.dataset.to;
+      const isLive = stat.hasAttribute("data-live");
 
       // (a) 整格淡入上移
       statsTl.from(
@@ -150,22 +140,9 @@ mm.add(
         at
       );
 
-      // (b) data-spin:大數字 3D 360° 水平旋轉(與淡入同時)
-      if (stat.hasAttribute("data-spin")) {
-        statsTl.from(
-          numWrap,
-          {
-            rotationY: 360,
-            transformPerspective: 800,
-            transformOrigin: "50% 50%",
-            duration: 1.7 * d,
-            ease: "power2.out",
-          },
-          at
-        );
-      }
-
-      // (c) 數字滾動(放慢);live 格滾完後接續即時跳動
+      // (b) 數字滾動(放慢)。data-spin 那格沒有 .count(改用 3D),直接略過
+      if (!numEl) return;
+      const target = isLive ? LIVE_BASE : +numEl.dataset.to;
       const obj = { v: 0 };
       statsTl.to(
         obj,
@@ -173,9 +150,16 @@ mm.add(
           v: target,
           duration: 2.4 * d,
           ease: "power3.out",
-          onUpdate: () => (numEl.textContent = Math.round(obj.v)),
+          onUpdate: () => (numEl.textContent = isLive ? fmt(obj.v) : Math.round(obj.v)),
           onComplete: () => {
-            if (stat.hasAttribute("data-live") && !reduceMotion) startLive(numEl, target);
+            // live:滾到基數後,個位每 ~0.18 秒 +1,持續往上跑(減少動態時不啟動)
+            if (isLive && !reduceMotion) {
+              let v = target;
+              liveTimer = setInterval(() => {
+                v += 1;
+                numEl.textContent = fmt(v);
+              }, 180);
+            }
           },
         },
         at + 0.25            // 淡入後一點點才開始跳數字
@@ -230,6 +214,8 @@ mm.add(
         }),
     });
 
-    return () => {};
+    return () => {
+      if (liveTimer) clearInterval(liveTimer);   // 切換 media 條件時停掉 live 跑馬錶
+    };
   }
 );
