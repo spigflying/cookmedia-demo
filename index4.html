@@ -116,14 +116,11 @@
           <article class="feature" data-feature data-cn="依品牌階段與目標,量身打造完整作戰計畫。">
             <div class="feature__no">02 / 客製化策略規劃</div>
             <div class="feature__mock">
-              <div class="adfx adfx-aud" aria-hidden="true">
-                <span class="person a1"></span>
-                <span class="person a2"></span>
-                <span class="person a3"></span>
-                <span class="person a4"></span>
-                <span class="person a5"></span>
-                <span class="person a6"></span>
-                <div class="reticle"></div>
+              <div class="adfx adfx-venn" aria-hidden="true">
+                <div class="vc vc1"><span>性別</span></div>
+                <div class="vc vc2"><span>年齡</span></div>
+                <div class="vc vc3"><span>職業</span></div>
+                <div class="vc-core">精準</div>
               </div>
               <span>Audience · Funnel · Creative · KPI</span>
             </div>
@@ -134,18 +131,18 @@
           <article class="feature" data-feature data-cn="整合搜尋、社群、影音與聯播網,對的場景被看見。">
             <div class="feature__no">03 / 多元媒體規劃</div>
             <div class="feature__mock">
-              <div class="adfx adfx-media" aria-hidden="true">
-                <div class="tile t1 glass">
-                  <svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6"/><line x1="15" y1="15" x2="20" y2="20"/></svg>
+              <div class="adfx adfx-place" aria-hidden="true">
+                <!-- 版位 1:動態消息(圖 + 文字) -->
+                <div class="dev d1 glass">
+                  <div class="dl img"></div><div class="dl line"></div><div class="dl line short"></div>
                 </div>
-                <div class="tile t2 glass">
-                  <svg viewBox="0 0 24 24"><circle cx="7" cy="8" r="2.4"/><circle cx="17" cy="8" r="2.4"/><circle cx="12" cy="16" r="2.4"/><line x1="8.6" y1="9.4" x2="10.6" y2="14.4"/><line x1="15.4" y1="9.4" x2="13.4" y2="14.4"/></svg>
+                <!-- 版位 2:限時動態(整版圖) -->
+                <div class="dev d2 glass">
+                  <div class="dl full"></div>
                 </div>
-                <div class="tile t3 glass">
-                  <svg viewBox="0 0 24 24"><polygon points="9,7 18,12 9,17"/></svg>
-                </div>
-                <div class="tile t4 glass">
-                  <svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="11" rx="1.5"/><line x1="9" y1="20" x2="15" y2="20"/></svg>
+                <!-- 版位 3:側欄 / 橫幅 -->
+                <div class="dev d3 glass">
+                  <div class="dl line short"></div><div class="dl img2"></div><div class="dl banner"></div>
                 </div>
               </div>
               <span>Search · Social · Video · Display</span>
@@ -158,17 +155,30 @@
             <div class="feature__no">04 / 數位績效行銷</div>
             <div class="feature__mock">
               <div class="adfx adfx-chart" aria-hidden="true">
-                <div class="bars">
-                  <div class="bar c1 glass"></div>
-                  <div class="bar c2 glass"></div>
-                  <div class="bar c3 glass"></div>
-                  <div class="bar c4 glass"></div>
-                  <div class="bar c5 glass"></div>
+                <!-- 柱狀圖模式 -->
+                <div class="chart-bars">
+                  <div class="bars">
+                    <div class="bar c1 glass"></div>
+                    <div class="bar c2 glass"></div>
+                    <div class="bar c3 glass"></div>
+                    <div class="bar c4 glass"></div>
+                    <div class="bar c5 glass"></div>
+                  </div>
+                  <svg class="trend" viewBox="0 0 100 60" preserveAspectRatio="none">
+                    <polyline points="4,50 28,41 52,30 76,17 96,6" pathLength="1"/>
+                  </svg>
                 </div>
-                <svg class="trend" viewBox="0 0 100 60" preserveAspectRatio="none">
-                  <polyline points="4,50 28,41 52,30 76,17 96,6" pathLength="1"/>
-                </svg>
-                <span class="spark"></span>
+                <!-- 圓餅圖模式(過場切換) -->
+                <div class="chart-pie">
+                  <svg viewBox="0 0 42 42">
+                    <g transform="rotate(-90 21 21)">
+                      <circle class="seg sg1" cx="21" cy="21" r="15.915" pathLength="100"/>
+                      <circle class="seg sg2" cx="21" cy="21" r="15.915" pathLength="100"/>
+                      <circle class="seg sg3" cx="21" cy="21" r="15.915" pathLength="100"/>
+                      <circle class="seg sg4" cx="21" cy="21" r="15.915" pathLength="100"/>
+                    </g>
+                  </svg>
+                </div>
               </div>
               <span>A/B Test · ROAS · Conversion · Insight</span>
             </div>
