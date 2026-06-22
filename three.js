@@ -1,4 +1,4 @@
-/* 庫客行銷 Cookmedia — index4 數據區「BRAND PARTNERS」的金屬 3D「88」
+/* 庫客行銷 Cookmedia — 數據區「BRAND PARTNERS」的金屬 3D「88」
  * 真正的 WebGL 3D:PBR 金屬材質(metalness/roughness)+ 環境反射(RoomEnvironment)
  * + 環境光(Ambient)+ 直射光(Directional),持續水平慢轉,旋轉時金屬反光隨角度流動。
  * 失敗時(無 WebGL / 載入錯誤)保留 HTML 的平面「88」fallback。 */
@@ -9,7 +9,7 @@ import { TextGeometry } from "three/addons/geometries/TextGeometry.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 
 const mount = document.getElementById("brand3d");
-if (mount) init(mount).catch((err) => console.warn("[three4] 3D 初始化失敗,保留平面 88:", err));
+if (mount) init(mount).catch((err) => console.warn("[three] 3D 初始化失敗,保留平面 88:", err));
 
 async function init(mount) {
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;

@@ -1,8 +1,8 @@
-/* 庫客行銷 Cookmedia — index4 服務卡3「多元媒體規劃」廣告版位輪播
+/* 庫客行銷 Cookmedia — 服務卡3「多元媒體規劃」廣告版位輪播
  * 三個版位(動態消息 / 限時動態 / 側欄橫幅)以 anime.js v4 的 timeline 輪流亮起:
  * 上浮 + 微放大 + 邊框提亮,約 4.4 秒一輪、無縫循環。
  *
- * 版面(寬度自適應、不壓字、不溢出)由 styles4.css 的 .adfx-place 負責;
+ * 版面(寬度自適應、不壓字、不溢出)由 styles.css 的 .adfx-place 負責;
  * 本檔只負責「動效」,且尊重「減少動態」偏好(此時不啟動,保留靜態版位)。 */
 
 import { createTimeline } from "animejs";
