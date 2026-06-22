@@ -130,10 +130,13 @@
           <article class="feature" data-feature data-cn="整合搜尋、社群、影音與聯播網,對的場景被看見。">
             <div class="feature__no">03 / 多元媒體規劃</div>
             <div class="feature__mock">
+              <!-- 三版位響應式並排(寬度由 CSS flex 自適應,動畫由 media4.js 以 anime.js v4 驅動) -->
               <div class="adfx adfx-place" aria-hidden="true">
                 <!-- 版位 1:動態消息(圖 + 文字) -->
                 <div class="dev d1 glass">
-                  <div class="dl img"></div><div class="dl line"></div><div class="dl line short"></div>
+                  <div class="dl img"></div>
+                  <div class="dl line"></div>
+                  <div class="dl line short"></div>
                 </div>
                 <!-- 版位 2:限時動態(整版圖) -->
                 <div class="dev d2 glass">
@@ -141,7 +144,9 @@
                 </div>
                 <!-- 版位 3:側欄 / 橫幅 -->
                 <div class="dev d3 glass">
-                  <div class="dl line short"></div><div class="dl img2"></div><div class="dl banner"></div>
+                  <div class="dl line short"></div>
+                  <div class="dl img2"></div>
+                  <div class="dl banner"></div>
                 </div>
               </div>
               <span>Search · Social · Video · Display</span>
@@ -280,10 +285,14 @@
   {
     "imports": {
       "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/",
+      "animejs": "https://cdn.jsdelivr.net/npm/animejs@4.4.1/+esm"
     }
   }
   </script>
   <script type="module" src="three4.js"></script>
+
+  <!-- anime.js v4:服務卡3「多元媒體規劃」三版位輪播動畫 -->
+  <script type="module" src="media4.js"></script>
 </body>
 </html>
