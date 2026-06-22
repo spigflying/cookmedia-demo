@@ -398,14 +398,24 @@ a.contact__item:hover { opacity: 0.7; }
 }
 @keyframes coreGlow { 0%, 100% { opacity: 0.65; } 50% { opacity: 1; } }
 
-/* 卡3:廣告版位樣式(不同版位不同呈現),三支手機輪流亮起 */
-.adfx-place { display: flex; align-items: center; justify-content: center; gap: 22px; padding-bottom: 28px; }
-.adfx-place .dev {
-  width: 78px; height: 158px; border-radius: 15px; padding: 11px 9px;
-  display: flex; flex-direction: column; gap: 6px;
-  animation: devCycle 4.5s ease-in-out infinite;
+/* 卡3:廣告版位(三版位「動態消息 / 限時動態 / 側欄橫幅」並排,anime.js 驅動輪流亮起)
+ * 響應式重點:
+ *   1) 版位寬度用 flex:1 1 0 + min-width:0 + max-width,窄螢幕自動等比縮小 → 永不右側溢出
+ *   2) gap 用 clamp 隨寬度收斂
+ *   3) 容器以 padding-bottom 預留底部「Search · Social · …」標籤帶,版位置中於上方 → 不壓字 */
+.adfx-place {
+  display: flex; align-items: center; justify-content: center;
+  gap: clamp(10px, 3.5vw, 22px);
+  padding: 24px clamp(14px, 6%, 30px) 54px;
 }
-.adfx-place .d1 { animation-delay: 0s; } .adfx-place .d2 { animation-delay: 1.5s; } .adfx-place .d3 { animation-delay: 3s; }
+.adfx-place .dev {
+  flex: 1 1 0; min-width: 0; max-width: 84px;
+  height: min(100%, 158px);
+  border-radius: 15px; padding: 11px 9px;
+  display: flex; flex-direction: column; gap: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transform-origin: center bottom; will-change: transform;
+}
 .adfx-place .dl { background: rgba(255, 255, 255, 0.32); border-radius: 4px; flex: none; }
 .adfx-place .dl.img { height: 48px; }
 .adfx-place .dl.img2 { height: 42px; }
@@ -413,11 +423,6 @@ a.contact__item:hover { opacity: 0.7; }
 .adfx-place .dl.line { height: 8px; }
 .adfx-place .dl.short { width: 62%; }
 .adfx-place .dl.banner { height: 16px; margin-top: auto; background: rgba(255, 255, 255, 0.5); }
-@keyframes devCycle {
-  0%, 100% { transform: translateY(0) scale(1); border-color: rgba(255, 255, 255, 0.3); }
-  16% { transform: translateY(-8px) scale(1.04); border-color: rgba(255, 255, 255, 0.7); }
-  36% { transform: translateY(0) scale(1); }
-}
 
 /* 卡4:績效成長面積圖(平滑上升曲線 + 漸層填色 + 發光資料點 + 掃描微光) */
 .adfx-perf { overflow: hidden; }
