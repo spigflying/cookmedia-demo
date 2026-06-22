@@ -235,14 +235,14 @@ mm.add(
 
       let revealed = false;
       // resize 後光點重新貼回曲線終點,避免縮放後位置跑掉
-      const onResize = () => { if (revealed) placeDot(98); };
+      const onResize = () => { if (revealed) placeDot(92); };
 
       if (reduceMotion) {
         // 開啟「減少動態」:直接顯示最終狀態,不播放動畫
         gsap.set(clipRect, { attr: { width: 100 } });
         gsap.set([dot, ...grid], { autoAlpha: 1, scaleX: 1 });
         revealed = true;
-        placeDot(98);
+        placeDot(92);
       } else {
         ScrollTrigger.create({
           trigger: perf.closest(".feature"),
@@ -250,7 +250,7 @@ mm.add(
           once: true,
           onEnter: () => {
             const proxy = { p: 0 };
-            const tl = gsap.timeline({ onComplete: () => { revealed = true; } });
+            const tl = gsap.timeline({ onComplete: () => { revealed = true; gsap.set(clipRect, { attr: { width: 100 } }); } });
             // 1) 底層格線由左展開
             tl.to(grid, { scaleX: 1, duration: 0.5 * d, stagger: 0.08 * d, ease: "power2.out" }, 0);
             // 2) 光點先亮起,準備沿曲線前進
@@ -261,7 +261,7 @@ mm.add(
               duration: 1.2 * d,
               ease: "power2.inOut",
               onUpdate: () => {
-                const x = 2 + 96 * proxy.p;        // 曲線 x 範圍 2→98
+                const x = 3 + 89 * proxy.p;        // 曲線 x 範圍 3→92
                 gsap.set(clipRect, { attr: { width: x } });
                 placeDot(x);
               },
